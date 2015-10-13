@@ -1,25 +1,28 @@
 {
-	"name": "vscode-classyNaming",
-	"version": "0.0.1",
-	"publisher": "Andrei.Zubov",
-	"engines": {
-		"vscode": "*"
-	},
-	"activationEvents": [
-		"onLanguage:csharp"
-	],
-	"main": "./out/extension",
-	"contributes": {
-		"commands": [{
-			"command": "extension.sayHello",
-			"title": "Hello World"
-		}]
-	},
-	"scripts": {
-		"vscode:prepublish": "node ./node_modules/typescript/lib/tsc.js",
-		"compile": "node ./node_modules/typescript/lib/tsc.js -watch -p ./"
-	},
-	"devDependencies": {
-		"vscode": "*"
-	}
+  "name": "vscode-classyNaming",
+  "version": "0.0.1",
+  "publisher": "Andrei.Zubov",
+  "engines": {
+    "vscode": "*"
+  },
+  "activationEvents": [
+    "onLanguage:csharp"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.sayHello",
+        "title": "Hello World"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "node ./node_modules/typescript/bin/tsc",
+    "compile": "node ./node_modules/typescript/bin/tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "jasmine": "^2.3.2",
+    "vscode": "*"
+  }
 }
