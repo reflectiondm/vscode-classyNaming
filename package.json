@@ -6,7 +6,7 @@
 		"vscode": "*"
 	},
 	"activationEvents": [
-		"command:extension.sayHello"
+		"onLanguage:csharp"
 	],
 	"main": "./out/extension",
 	"contributes": {
@@ -16,8 +16,8 @@
 		}]
 	},
 	"scripts": {
-		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
+		"vscode:prepublish": "node ./node_modules/typescript/lib/tsc.js",
+		"compile": "node ./node_modules/typescript/lib/tsc.js -watch -p ./"
 	},
 	"devDependencies": {
 		"vscode": "*"
