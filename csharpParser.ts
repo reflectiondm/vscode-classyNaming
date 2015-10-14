@@ -11,7 +11,7 @@ export class CsharpParser {
 		return result;
 	}
 
-	public SplitTypeName(typeName: string): string[] {
+	public splitTypeName(typeName: string): string[] {
 		var re = /([A-Za-z]?)([a-z]+)/g;
 
 		var match = re.exec(typeName);
@@ -27,7 +27,7 @@ export class CsharpParser {
 		}
 		return result;
 	}
-
+	
 	private isMemberSeparator(c: string): boolean {
 		return c == '('
 			|| c == ' ';

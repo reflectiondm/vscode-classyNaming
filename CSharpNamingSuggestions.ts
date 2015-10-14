@@ -1,33 +1,48 @@
 import * as vscode from 'vscode'
+import * as csharp from './csharpParser'
 
 export let modeId: string = 'csharp';
 
 export class SuggestSupport implements vscode.Modes.ISuggestSupport {
-	public triggerCharacters: string[] = ['prop'];
+
+	private parser :csharp.CsharpParser = new csharp.CsharpParser();
+	
+	public triggerCharacters: string[] = [' ', "."];
 	public excludeTokens: string[];
+	public sortBy: vscode.Modes.ISortingTypeAndSeparator[] = [{
+		type:  "aType"
+	}];
 	public suggest(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken) {
 		console.log('Entered suggest method');
-		var text = document.getTextOnLine(position.line);
-		var words = text.substring(0, position.character).split(' ');
-
+		
+		//TODO: Write a testcase for it
+		var start = new vscode.Position(position.line, 0);
+		var range = new vscode.Range(start, position);
+		var text = document.getTextInRange(range);
+		
+		console.log('Got the following text from document: ' + text);
+		
+		var type = this.parser.extractType(text);
+		var variants = this.parser.splitTypeName(type);
+		
+		var variant = variants[0][0].toLowerCase() + variants[0].substring(1);
 		let suggestion: vscode.Modes.ISuggestion = {
-			label: 'create property template',
-			codeSnippet: 'public string YourProperty { get; set; }',
-			type: 'this is type'
-		};
-
-		let suggestion2: vscode.Modes.ISuggestion = {
-			label: 'this is another label',
-			codeSnippet: 'this is code snippet number 2',
-			type: 'this is type'
+			label: variant,
+			codeSnippet: variant,
+			type: "aType",
+			typeLabel: 'this is type'
 		};
 
 		let result: vscode.Modes.ISuggestions = {
 			currentWord: 'current word',
-			suggestions: [suggestion, suggestion2],
+			suggestions: [suggestion],
+			overwriteBefore: false,
+			overwriteAfter: false
 		}
+		
+		console.log('Result is: ' + result.suggestions[0].label);
 		return Promise.resolve([
 			result
 		])
-	}
+	};
 };

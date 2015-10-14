@@ -17,12 +17,12 @@ describe("C# parser that extracts types from plaintext string", function(){
 	});
 	
 	it("should break the interface in parts based on case, without I", function(){
-		var result = target.SplitTypeName(wellKnownInterface);
+		var result = target.splitTypeName(wellKnownInterface);
 		expect(result).toEqual(["Some", "Interface"]);
 	});
 	
 	it("should break the className in parts based on case", function(){
-		var result = target.SplitTypeName("TestCaseServiceProvider");
+		var result = target.splitTypeName("TestCaseServiceProvider");
 		expect(result).toEqual(["Test", "Case", "Service", "Provider"]);
 	});
 });
