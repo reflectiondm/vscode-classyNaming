@@ -19,7 +19,8 @@
   },
   "scripts": {
     "vscode:prepublish": "node ./node_modules/typescript/bin/tsc",
-    "compile": "node ./node_modules/typescript/bin/tsc -watch -p ./"
+    "compile": "node ./node_modules/typescript/bin/tsc -watch -p ./",
+    "test":"jasmine"
   },
   "devDependencies": {
     "jasmine": "^2.3.2",

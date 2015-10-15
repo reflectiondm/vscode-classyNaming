@@ -20,7 +20,7 @@ describe("SuggestSupport provides variable name based on a type name", function 
 	it("should suggest at least one name based on variable type", function (done) {
 		var document = getDocument("public Provider ");
 		target.suggest(document, position, token).then(function (res) {
-			expect(res[0].suggestions[0].label).toEqual("provider");
+			expect(res[0].suggestions[0].label).toContain("provider");
 			done();
 		})
 	});

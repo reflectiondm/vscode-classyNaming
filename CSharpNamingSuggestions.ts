@@ -36,8 +36,8 @@ export class SuggestSupport implements vscode.Modes.ISuggestSupport {
 		let result: vscode.Modes.ISuggestions = {
 			currentWord: 'current word',
 			suggestions: [suggestion],
-			overwriteBefore: false,
-			overwriteAfter: false
+			overwriteBefore: 0,
+			overwriteAfter: 0
 		}
 		
 		console.log('Result is: ' + result.suggestions[0].label);
