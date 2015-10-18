@@ -1,14 +1,31 @@
-# README
-## This the readme for your extension "vscode-classyNaming" 
+# Classy Naming
+## What is it for? 
 -------------------
-To author your README use Visual Studio Code:
+Just look at that code:
+```csharp
+public class BandDataProcessor
+{
+	private readonly IBandDataProvier _dataProvider;
+	private readonly IBandFromatter _formatter;
+	private readonly BandParser _bandParser;
+	
+	public BandDataProcessor(IBandDataProvier dataProvider, 
+		IBandFromatter formatter, 
+		BandParser bandParser)
+	{
+		...
+	}
+}
+```
 
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
+Looks familiar, right? We all tend to stick to pretty much same naming 
+conventions and tend to name parameters or fields after the types they 
+represent. While your IDE (and VS Code does it for sure) will suggest 
+you the type name after a few keystrokes, you normally have to type in
+the name from the begining to the end. How fun can that be? No fun at all.
 
-### For more information
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](http://daringfireball.net)
+*ClassyNaming* is there to save you from dying of boredom when naming your fields.
+Just start typing a variable name and it will suggest you the most obvious options
+to chose from!
 
-** Enjoy!**
+### More info and instructions are coming!
