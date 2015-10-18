@@ -27,7 +27,27 @@ export class CsharpParser {
 		}
 		return result;
 	}
-	
+
+	public combineSuggestions(parts: string[]): string[] {
+		var result = [];
+		for (var i = parts.length - 1; i >= 0; i--) {
+			var suggestion = '';
+			for (var j = i; j < parts.length; j++){
+				suggestion += parts[j];
+			}
+			suggestion = suggestion[0].toLowerCase() + suggestion.substring(1);
+			result.push(suggestion);
+		}
+		return result;
+	}
+
+	public getSuggestions(input: string): string[] {
+		var typeName = this.extractType(input);
+		var nameParts = this.splitTypeName(typeName);
+		var result = this.combineSuggestions(nameParts);
+		return result;
+	}
+
 	private isMemberSeparator(c: string): boolean {
 		return c == '('
 			|| c == ' ';
