@@ -41,4 +41,13 @@ describe("C# parser that extracts types from plaintext string", function () {
 		var result = target.extractType(input);
 		expect(result).toBe("ISomeType");
 	});
+	
+	['public', 'private', 'protected', 'abstract', 'int', 
+	 'string', 'decimal', 'var', 'float', 'bool', 'boolean'].forEach(function(ignoreCase){
+		it('should ignore ' + ignoreCase + ' keyword', function(){
+			var input = "   " + ignoreCase + ' ';
+			var result = target.getSuggestions(input);
+			expect(result).toEqual([]);
+		});
+	});
 });

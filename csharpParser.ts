@@ -1,4 +1,7 @@
 export class CsharpParser {
+	private reservedKeywords: string[] = ['public', 'private', 'protected', 'abstract', 'int',
+		'string', 'decimal', 'var', 'float', 'bool', 'boolean'];
+
 	public extractType(input: string): string {
 		var sanitize = input.trim();
 		var result = sanitize;
@@ -8,7 +11,9 @@ export class CsharpParser {
 				break;
 			}
 		}
-		
+		if (this.isReservedKeyword(result)) {
+			return '';
+		}
 		return result;
 	}
 
@@ -33,7 +38,7 @@ export class CsharpParser {
 		var result = [];
 		for (var i = parts.length - 1; i >= 0; i--) {
 			var suggestion = '';
-			for (var j = i; j < parts.length; j++){
+			for (var j = i; j < parts.length; j++) {
 				suggestion += parts[j];
 			}
 			suggestion = suggestion[0].toLowerCase() + suggestion.substring(1);
@@ -52,5 +57,9 @@ export class CsharpParser {
 	private isMemberSeparator(c: string): boolean {
 		return c == '('
 			|| c == ' ';
+	}
+
+	private isReservedKeyword(extractedType: string): boolean {
+		return this.reservedKeywords.some((el) => el == extractedType);
 	}
 }
