@@ -3,17 +3,30 @@ export class CsharpParser {
 		'string', 'decimal', 'var', 'float', 'bool', 'boolean'];
 
 	public extractType(input: string): string {
-		var sanitize = input.trim();
-		var result = sanitize;
-		for (var i = sanitize.length - 1; i > 0; i--) {
-			if (this.isMemberSeparator(sanitize[i])) {
-				result = sanitize.substring(i + 1);
+		var sanitized = input.trim();
+		var result = '';
+		for (i = sanitized.length - 1; i > 0; i--) {
+			if (this.isMemberSeparator(sanitized[i])) {
+				sanitized = sanitized.substring(i + 1);
 				break;
 			}
 		}
-		if (this.isReservedKeyword(result)) {
-			return '';
+		var members = sanitized.split(" ");
+		for (var i = 0; i < members.length; i++) {
+			var member = members[i];
+			if (member == '' || this.isReservedKeyword(member)) {
+				continue;
+			}
+			if (i == members.length - 1) {
+				result = member;
+			}
+			else {
+				// member name seems to be already provided in that case
+				result = '';
+				break;
+			}
 		}
+
 		return result;
 	}
 
@@ -56,7 +69,7 @@ export class CsharpParser {
 
 	private isMemberSeparator(c: string): boolean {
 		return c == '('
-			|| c == ' ';
+			|| c == ',';
 	}
 
 	private isReservedKeyword(extractedType: string): boolean {
