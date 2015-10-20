@@ -35,4 +35,10 @@ describe("C# parser that extracts types from plaintext string", function () {
 			'someInterface'
 		]);
 	});
+	
+	it('should correctly handle new line parameter definitions', function(){
+		var input = "			ISomeType ";
+		var result = target.extractType(input);
+		expect(result).toBe("ISomeType");
+	});
 });

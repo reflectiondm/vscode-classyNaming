@@ -1,13 +1,14 @@
 export class CsharpParser {
 	public extractType(input: string): string {
 		var sanitize = input.trim();
-		var result = '';
+		var result = sanitize;
 		for (var i = sanitize.length - 1; i > 0; i--) {
 			if (this.isMemberSeparator(sanitize[i])) {
 				result = sanitize.substring(i + 1);
 				break;
 			}
 		}
+		
 		return result;
 	}
 
