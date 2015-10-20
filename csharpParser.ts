@@ -1,3 +1,4 @@
+// TODO rename variables to domain related names
 export class CsharpParser {
 	private reservedKeywords: string[] = ['public', 'private', 'protected', 'abstract', 'int',
 		'string', 'decimal', 'var', 'float', 'bool', 'boolean'];
