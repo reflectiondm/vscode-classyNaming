@@ -3,29 +3,10 @@ export class CsharpParser {
 		'string', 'decimal', 'var', 'float', 'bool', 'boolean'];
 
 	public extractType(input: string): string {
-		var sanitized = input.trim();
-		var result = '';
-		for (i = sanitized.length - 1; i > 0; i--) {
-			if (this.isMemberSeparator(sanitized[i])) {
-				sanitized = sanitized.substring(i + 1);
-				break;
-			}
-		}
-		var members = sanitized.split(" ");
-		for (var i = 0; i < members.length; i++) {
-			var member = members[i];
-			if (member == '' || this.isReservedKeyword(member)) {
-				continue;
-			}
-			if (i == members.length - 1) {
-				result = member;
-			}
-			else {
-				// member name seems to be already provided in that case
-				result = '';
-				break;
-			}
-		}
+		// TODO: next time this is altered, replace strings with something more domain related
+		var memberDeclaration = this.getMostLikelyMemberDeclaration(input.trim());
+		var members = memberDeclaration.split(" ");
+		var result = this.getTypeFromMembers(members);
 
 		return result;
 	}
@@ -67,6 +48,23 @@ export class CsharpParser {
 		return result;
 	}
 
+	private getTypeFromMembers(members: string[]) : string{
+		for (var i = 0; i < members.length; i++) {
+			var member = members[i];
+			if (member == '' || this.isReservedKeyword(member)) {
+				continue;
+			}
+			if (i == members.length - 1) {
+				return member;
+			}
+			else {
+				// member name seems to be already provided in that case
+				return '';
+			}
+		}
+		return '';
+	}
+	
 	private isMemberSeparator(c: string): boolean {
 		return c == '('
 			|| c == ',';
@@ -74,5 +72,14 @@ export class CsharpParser {
 
 	private isReservedKeyword(extractedType: string): boolean {
 		return this.reservedKeywords.some((el) => el == extractedType);
+	}
+
+	private getMostLikelyMemberDeclaration(input: string): string {
+		for (var i = input.length - 1; i > 0; i--) {
+			if (this.isMemberSeparator(input[i])) {
+				return input.substring(i + 1);
+			}
+		}
+		return input;
 	}
 }
