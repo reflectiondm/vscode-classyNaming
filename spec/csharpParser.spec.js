@@ -45,7 +45,7 @@ describe("C# parser", function () {
 			]);
 		});
 
-		['public', 'private', 'protected', 'abstract', 'int',
+		['public', 'private', 'protected', 'abstract', 'int', 'class',
 			'string', 'decimal', 'var', 'float', 'bool', 'boolean'].forEach(function (ignoreCase) {
 				it('should ignore ' + ignoreCase + ' keyword', function () {
 					var input = "   " + ignoreCase + ' ';
