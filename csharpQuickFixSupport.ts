@@ -1,5 +1,5 @@
-import * as vscode from 'vscode';
-import * as parser from './csharpParser';
+import * as vscode from "vscode";
+import * as parser from "./csharpParser";
 
 export class csharpQuickFixSupport implements vscode.Modes.IQuickFixSupport {
 	private parser = new parser.CsharpParser();
@@ -11,7 +11,7 @@ export class csharpQuickFixSupport implements vscode.Modes.IQuickFixSupport {
 		var result = suggestions.map(this.toQuickFix);
 		return Promise.resolve(result);
 	}
-	
+
 	public runQuickFixAction(resource: vscode.TextDocument, range: vscode.Range, id: any, token: vscode.CancellationToken) { 
 		var wordRange = resource.getWordRangeAtPosition(range.start);
 		var newText = id as string;
@@ -23,12 +23,12 @@ export class csharpQuickFixSupport implements vscode.Modes.IQuickFixSupport {
 			]
 		});
 	}
-	
+
 	private toQuickFix(suggestion: string) : vscode.Modes.IQuickFix{
 		return {
 			label: suggestion,
 			id: suggestion,
-			documentation: 'Rename to ' + suggestion,
+			documentation: "Rename to " + suggestion,
 			score: 5
 		};
 	}

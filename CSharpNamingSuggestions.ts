@@ -1,14 +1,14 @@
-import * as vscode from 'vscode'
-import * as csharp from './csharpParser'
+import * as vscode from "vscode";
+import * as csharp from "./csharpParser";
 
-export let modeId: string = 'csharp';
+export let modeId: string = "csharp";
 
 export class SuggestSupport implements vscode.Modes.ISuggestSupport {
 
 	private parser :csharp.CsharpParser = new csharp.CsharpParser();
-	
-	public triggerCharacters: string[] = [' ', "."];
-	public excludeTokens: string[];
+
+	public triggerCharacters: string[] = [" ", "_"];
+	public excludeTokens: string[] = ["_"];
 	public sortBy: vscode.Modes.ISortingTypeAndSeparator[] = [{
 		type:  "aType"
 	}];
@@ -17,25 +17,25 @@ export class SuggestSupport implements vscode.Modes.ISuggestSupport {
 		var start = new vscode.Position(position.line, 0);
 		var range = new vscode.Range(start, position);
 		var text = document.getTextInRange(range);
-		
+		console.log("text: " + text);
 		var variants = this.parser.getSuggestions(text);
 		var type = this.parser.extractType(text);
 
 		var suggestions = variants.map((v) => this.toSuggestion(v, type));
 
 		let result: vscode.Modes.ISuggestions = {
-			currentWord: 'current word',
+			currentWord: "current word",
 			suggestions: suggestions,
 			overwriteBefore: 0,
 			overwriteAfter: 0
-		}
-		
-		console.log('Result is: ' + result.suggestions[0].label);
+		};
+
+		console.log("Result is: " + result.suggestions[0].label);
 		return Promise.resolve([
 			result
-		])
+		]);
 	};
-	
+
 	private toSuggestion(variant: string, type: string) : vscode.Modes.ISuggestion{
 		return {
 			label: variant,

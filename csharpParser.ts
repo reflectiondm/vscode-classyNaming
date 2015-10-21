@@ -1,7 +1,7 @@
 // TODO rename variables to domain related names
 export class CsharpParser {
-	private reservedKeywords: string[] = ['public', 'private', 'protected', 'abstract', 'int',
-		'string', 'decimal', 'var', 'float', 'bool', 'boolean'];
+	private reservedKeywords: string[] = ["public", "private", "protected", "abstract", "int",
+		"string", "decimal", "var", "float", "bool", "boolean", "class"];
 
 	public extractType(input: string): string {
 		// TODO: next time this is altered, replace strings with something more domain related
@@ -32,7 +32,7 @@ export class CsharpParser {
 	public combineSuggestions(parts: string[]): string[] {
 		var result = [];
 		for (var i = parts.length - 1; i >= 0; i--) {
-			var suggestion = '';
+			var suggestion = "";
 			for (var j = i; j < parts.length; j++) {
 				suggestion += parts[j];
 			}
@@ -52,7 +52,7 @@ export class CsharpParser {
 	private getTypeFromMembers(members: string[]) : string{
 		for (var i = 0; i < members.length; i++) {
 			var member = members[i];
-			if (member == '' || this.isReservedKeyword(member)) {
+			if (member == "" || this.isReservedKeyword(member)) {
 				continue;
 			}
 			if (i == members.length - 1) {
@@ -60,15 +60,15 @@ export class CsharpParser {
 			}
 			else {
 				// member name seems to be already provided in that case
-				return '';
+				return "";
 			}
 		}
-		return '';
+		return "";
 	}
-	
+
 	private isMemberSeparator(c: string): boolean {
-		return c == '('
-			|| c == ',';
+		return c == "("
+			|| c == ",";
 	}
 
 	private isReservedKeyword(extractedType: string): boolean {
@@ -76,11 +76,15 @@ export class CsharpParser {
 	}
 
 	private getMostLikelyMemberDeclaration(input: string): string {
+		var end = input.length;
 		for (var i = input.length - 1; i > 0; i--) {
+			if(input[i] == "_"){
+				end--;
+			}
 			if (this.isMemberSeparator(input[i])) {
-				return input.substring(i + 1);
+				return input.substring(i + 1, end);
 			}
 		}
-		return input;
+		return input.substring(0, end);
 	}
 }
