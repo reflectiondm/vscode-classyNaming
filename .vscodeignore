@@ -4,3 +4,6 @@ typings/**
 .gitignore
 tsconfig.json
 vsc-extension-quickstart.md
+tsd.json
+spec/**/*.js
+.travis.yml
