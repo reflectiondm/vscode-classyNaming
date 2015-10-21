@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/reflectiondm/vscode-classyNaming.svg)](https://travis-ci.org/reflectiondm/vscode-classyNaming)
 [![bitHound Score](https://www.bithound.io/github/reflectiondm/vscode-classyNaming/badges/score.svg)](https://www.bithound.io/github/reflectiondm/vscode-classyNaming)
 
 # Classy Naming
