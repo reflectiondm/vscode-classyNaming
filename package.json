@@ -1,7 +1,8 @@
 {
-  "name": "vscode-classyNaming",
+  "name": "ClassyNaming",
   "version": "0.0.1",
-  "publisher": "Andrei.Zubov",
+  "publisher": "reflectiondm",
+  "description": "Provides suggestions for field and parameter names for C#",
   "engines": {
     "vscode": "*"
   },
