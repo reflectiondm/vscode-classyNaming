@@ -5,28 +5,28 @@ export let modeId: string = "csharp";
 
 export class SuggestSupport implements vscode.Modes.ISuggestSupport {
 
-	private parser :csharp.CsharpParser = new csharp.CsharpParser();
+	private parser: csharp.CsharpParser = new csharp.CsharpParser();
 
 	public triggerCharacters: string[] = ["_", " "];
 	public excludeTokens: string[] = [];
 	public sortBy: vscode.Modes.ISortingTypeAndSeparator[] = [{
-		type:  "aType"
+		type: "aType"
 	}];
 	public suggest(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken) {
 		//TODO: Write a testcase for it
 		var start = new vscode.Position(position.line, 0);
 		var range = new vscode.Range(start, position);
 		var text = document.getTextInRange(range);
-		console.log("text: " + text);
+
 		var parsingResult = this.parser.getParsingResult(text);
 		var type = parsingResult.typeName;
-
+		var overwriteBefore = parsingResult.userInput.length;
 		var suggestions = parsingResult.suggestions.map((v) => this.toSuggestion(v, type));
-		console.log("suggestions: " + suggestions);
+
 		let result: vscode.Modes.ISuggestions = {
 			currentWord: "current word",
 			suggestions: suggestions,
-			overwriteBefore: 0,
+			overwriteBefore: overwriteBefore,
 			overwriteAfter: 0
 		};
 
@@ -36,7 +36,7 @@ export class SuggestSupport implements vscode.Modes.ISuggestSupport {
 		]);
 	};
 
-	private toSuggestion(variant: string, type: string) : vscode.Modes.ISuggestion{
+	private toSuggestion(variant: string, type: string): vscode.Modes.ISuggestion {
 		return {
 			label: variant,
 			codeSnippet: variant,

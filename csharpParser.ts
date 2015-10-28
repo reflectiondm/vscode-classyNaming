@@ -53,7 +53,8 @@ export class CsharpParser {
 		var declarationInfo = new di.DeclarationInfo(input);
 		var typeName = declarationInfo.getTypeName();
 		var suggestions = this.getSuggestions(declarationInfo);
-		return new ParsingResult(suggestions, typeName);
+		var userInput = declarationInfo.getUserInput();
+		return new ParsingResult(suggestions, typeName, userInput);
 	}
 
 	private ToPascal(input: string): string {
@@ -66,10 +67,12 @@ export class CsharpParser {
 }
 
 export class ParsingResult {
-	constructor(suggestions: string[], typeName: string) {
+	constructor(suggestions: string[], typeName: string, userInput: string) {
 		this.suggestions = suggestions;
 		this.typeName = typeName;
+		this.userInput = userInput;
 	}
 	public suggestions: string[];
 	public typeName: string;
+	public userInput: string;
 }
