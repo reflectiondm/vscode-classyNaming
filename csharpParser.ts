@@ -1,5 +1,5 @@
 // TODO rename variables to domain related names
-import * as di from './DeclarationInfo';
+import * as di from './declarationInfo';
 
 export class CsharpParser {
 	public splitTypeName(typeName: string): string[] {
