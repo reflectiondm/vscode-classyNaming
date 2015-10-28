@@ -19,34 +19,45 @@ describe("C# parser", function () {
 		});
 	});
 
-	describe('get suggestions', function () {
-		it('should be able to provide suggested names', function () {
-			var result = target.getSuggestions(wellKnownTextLine);
-			expect(result).toEqual([
-				'interface',
-				'someInterface'
-			]);
-		});
-
-		['public', 'private', 'protected', 'abstract', 'int', 'class',
-			'string', 'decimal', 'var', 'float', 'bool', 'boolean'].forEach(function (ignoreCase) {
-				it('should ignore ' + ignoreCase + ' keyword', function () {
-					var input = "   " + ignoreCase + ' ';
-					var result = target.getSuggestions(input);
-					expect(result).toEqual([]);
-				});
+	describe("getParsingResult", function () {
+		describe('suggestions', function () {
+			var getSuggestions = function (input) {
+				return target.getParsingResult(input).suggestions;
+			}
+			it('should be able to provide suggested names', function () {
+				var result = getSuggestions(wellKnownTextLine);
+				expect(result).toEqual([
+					'interface',
+					'someInterface'
+				]);
 			});
 
-		it('should detect that the variable has already been provided', function () {
-			var input = "  public ISomeType someType ";
-			var result = target.getSuggestions(input);
-			expect(result).toEqual([]);
-		});
+			['public', 'private', 'protected', 'abstract', 'int', 'class',
+				'string', 'decimal', 'var', 'float', 'bool', 'boolean'].forEach(function (ignoreCase) {
+					it('should ignore ' + ignoreCase + ' keyword', function () {
+						var input = "   " + ignoreCase + ' ';
+						var result = getSuggestions(input);
+						expect(result).toEqual([]);
+					});
+				});
 
-		it('should provide suggestions with user input', function () { 
-			var input = "  public ISomeType my";
-			var result = target.getSuggestions(input);
-			expect(result).toContain("mySomeType");
+			it('should detect that the variable has already been provided', function () {
+				var input = "  public ISomeType someType ";
+				var result = getSuggestions(input);
+				expect(result).toEqual([]);
+			});
+
+			it('should provide suggestions with user input', function () {
+				var input = "  public ISomeType my";
+				var result = getSuggestions(input);
+				expect(result).toContain("mySomeType");
+			});
+		});
+		
+		it("should contain typeName", function() {
+			var input = data.WellKnownTextLine;
+			var result = target.getParsingResult(input).typeName;
+			expect(result).toBe(data.WellKnownInterface);
 		});
 	});
 });

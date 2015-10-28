@@ -7,7 +7,7 @@ export class csharpQuickFixSupport implements vscode.Modes.IQuickFixSupport {
 		var memberRange = document.getWordRangeAtPosition(marker.start);
 		var quickFixMember = document.getTextInRange(memberRange);
 		var memberDeclaration = document.getTextInRange(new vscode.Range(new vscode.Position(marker.start.line, 1), memberRange.start));
-		var suggestions = this.parser.getSuggestions(memberDeclaration);
+		var suggestions = this.parser.getParsingResult(memberDeclaration).suggestions;
 		var result = suggestions.map(this.toQuickFix);
 		return Promise.resolve(result);
 	}

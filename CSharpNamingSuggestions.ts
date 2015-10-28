@@ -7,8 +7,8 @@ export class SuggestSupport implements vscode.Modes.ISuggestSupport {
 
 	private parser :csharp.CsharpParser = new csharp.CsharpParser();
 
-	public triggerCharacters: string[] = [" ", "_"];
-	public excludeTokens: string[] = ["_"];
+	public triggerCharacters: string[] = ["_", " "];
+	public excludeTokens: string[] = [];
 	public sortBy: vscode.Modes.ISortingTypeAndSeparator[] = [{
 		type:  "aType"
 	}];
@@ -18,11 +18,11 @@ export class SuggestSupport implements vscode.Modes.ISuggestSupport {
 		var range = new vscode.Range(start, position);
 		var text = document.getTextInRange(range);
 		console.log("text: " + text);
-		var variants = this.parser.getSuggestions(text);
-		var type = this.parser.extractType(text);
+		var parsingResult = this.parser.getParsingResult(text);
+		var type = parsingResult.typeName;
 
-		var suggestions = variants.map((v) => this.toSuggestion(v, type));
-
+		var suggestions = parsingResult.suggestions.map((v) => this.toSuggestion(v, type));
+		console.log("suggestions: " + suggestions);
 		let result: vscode.Modes.ISuggestions = {
 			currentWord: "current word",
 			suggestions: suggestions,
