@@ -1,17 +1,7 @@
 // TODO rename variables to domain related names
+import * as di from './DeclarationInfo';
+
 export class CsharpParser {
-	private reservedKeywords: string[] = ["public", "private", "protected", "abstract", "int",
-		"string", "decimal", "var", "float", "bool", "boolean", "class"];
-
-	public extractType(input: string): string {
-		// TODO: next time this is altered, replace strings with something more domain related
-		var memberDeclaration = this.getMostLikelyMemberDeclaration(input.trim());
-		var members = memberDeclaration.split(" ");
-		var result = this.getTypeFromMembers(members);
-
-		return result;
-	}
-
 	public splitTypeName(typeName: string): string[] {
 		var re = /([A-Za-z]?)([a-z]+)/g;
 
@@ -43,48 +33,9 @@ export class CsharpParser {
 	}
 
 	public getSuggestions(input: string): string[] {
-		var typeName = this.extractType(input);
-		var nameParts = this.splitTypeName(typeName);
+		var declarationInfo = new di.DeclarationInfo(input);
+		var nameParts = this.splitTypeName(declarationInfo.getTypeName());
 		var result = this.combineSuggestions(nameParts);
 		return result;
-	}
-
-	private getTypeFromMembers(members: string[]) : string{
-		for (var i = 0; i < members.length; i++) {
-			var member = members[i];
-			if (member == "" || this.isReservedKeyword(member)) {
-				continue;
-			}
-			if (i == members.length - 1) {
-				return member;
-			}
-			else {
-				// member name seems to be already provided in that case
-				return "";
-			}
-		}
-		return "";
-	}
-
-	private isMemberSeparator(c: string): boolean {
-		return c == "("
-			|| c == ",";
-	}
-
-	private isReservedKeyword(extractedType: string): boolean {
-		return this.reservedKeywords.some((el) => el == extractedType);
-	}
-
-	private getMostLikelyMemberDeclaration(input: string): string {
-		var end = input.length;
-		for (var i = input.length - 1; i > 0; i--) {
-			if(input[i] == "_"){
-				end--;
-			}
-			if (this.isMemberSeparator(input[i])) {
-				return input.substring(i + 1, end);
-			}
-		}
-		return input.substring(0, end);
 	}
 }
