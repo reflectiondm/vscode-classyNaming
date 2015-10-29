@@ -1,5 +1,5 @@
 ///</// <reference path="../typings/tsd.d.ts" />
-var DeclarationInfo = require("../out/DeclarationInfo").DeclarationInfo;
+var DeclarationInfo = require("../out/declarationInfo").DeclarationInfo;
 var data = require("./commonTestData");
 
 var getTarget = function (input) {
