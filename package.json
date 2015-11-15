@@ -4,7 +4,7 @@
   "publisher": "reflectiondm",
   "description": "Provides suggestions for field and parameter names for C#",
   "engines": {
-    "vscode": "*"
+    "vscode": "0.10.x"
   },
   "activationEvents": [
     "onLanguage:csharp"
@@ -21,6 +21,6 @@
   },
   "devDependencies": {
     "jasmine": "^2.3.2",
-    "vscode": "*"
+    "vscode": "0.10.x"
   }
 }
