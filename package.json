@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "jasmine": "^2.3.2",
-    "vscode": "0.10.x"
+    "vscode": "0.10.x",
+    "typescript": "*"
   }
 }
