@@ -52,6 +52,13 @@ describe("C# parser", function () {
 				var result = getSuggestions(input);
 				expect(result).toContain("mySomeType");
 			});
+			
+			it('should provide suggestions with lowercase character after  _ ', function(){
+				var input = "  public ISomeType _";
+				var result = getSuggestions(input);
+				expect(result).toContain("_someType");
+				expect(result).toContain("_type");
+			});
 		});
 		
 		it("should contain typeName", function() {

@@ -41,7 +41,7 @@ export class CsharpParser {
 		var result = [];
 		var userInput = declarationInfo.getUserInput();
 		if (userInput != "") {
-			suggestions.forEach((s) => result.push(userInput + this.ToPascal(s)));
+			suggestions.forEach((s) => result.push(this.combineWithUserInput(s, userInput)));
 		}
 		else {
 			suggestions.forEach((s) => result.push(s));
@@ -63,6 +63,12 @@ export class CsharpParser {
 
 	private ToCamel(input: string): string {
 		return input[0].toLowerCase() + input.substring(1);
+	}
+	
+	private combineWithUserInput(suggestion: string, userInput: string): string{
+		return userInput == '_' ? 
+			userInput + suggestion :
+			userInput + this.ToPascal(suggestion);
 	}
 }
 
