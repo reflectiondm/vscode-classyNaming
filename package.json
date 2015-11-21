@@ -1,8 +1,24 @@
 {
   "name": "ClassyNaming",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "author": {
+    "name": "Andrei Zubov",
+    "email": "reflection.dm@gmail.com",
+    "url": "https://github.com/reflectiondm"
+  },
   "publisher": "reflectiondm",
+  "license": "MIT",
+  "displayName": "Classy Naming",
   "description": "Provides suggestions for field and parameter names for C#",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reflectiondm/vscode-classyNaming.git"
+  },
+  "homepage": "https://github.com/reflectiondm/vscode-classyNaming/blob/master/README.md",
+  "bugs": "https://github.com/reflectiondm/vscode-classyNaming/issues",
+  "categories": [
+        "Snippets", "Languages", "Other"
+    ],
   "engines": {
     "vscode": "0.10.x"
   },
@@ -25,6 +41,6 @@
   "devDependencies": {
     "jasmine": "^2.3.2",
     "vscode": "0.10.x",
-    "typescript": "*"
+    "typescript": "~1.6.2"
   }
 }

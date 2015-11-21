@@ -1,8 +1,9 @@
 .vscode/**
 typings/**
+assets/**
 **/*.ts
 .gitignore
 tsconfig.json
 tsd.json
-spec/**/*.js
+spec/**/*.*
 .travis.yml

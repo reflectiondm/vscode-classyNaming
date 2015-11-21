@@ -2,6 +2,8 @@
 [![bitHound Score](https://www.bithound.io/github/reflectiondm/vscode-classyNaming/badges/score.svg)](https://www.bithound.io/github/reflectiondm/vscode-classyNaming)
 
 # Classy Naming
+> Provides suggestions for field and parameter names for C#
+
 ## What is it for? 
 -------------------
 Just look at that code:
@@ -31,4 +33,9 @@ the name from the begining to the end. How fun can that be? No fun at all.
 Just start typing a variable name and it will suggest you the most obvious options
 to chose from!
 
-### More info and instructions are coming!
+## See how it works
+![](https://github.com/reflectiondm/vscode-classyNaming/assets/preview.gif)
+
+---------------
+## License
+MIT © [Andrei Zubov](https://github.com/reflectiondm)
