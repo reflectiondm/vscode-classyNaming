@@ -5,7 +5,6 @@
 > Provides suggestions for field and parameter names for C#
 
 ## What is it for? 
--------------------
 Just look at that code:
 ```csharp
 public class BandDataProcessor
