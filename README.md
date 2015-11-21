@@ -33,7 +33,7 @@ Just start typing a variable name or activate an IntellySense by a keyboard shor
 to chose from!
 
 ## See how it works
-![](https://github.com/reflectiondm/vscode-classyNaming/blob/master/assets/preview.gif)
+![](https://github.com/reflectiondm/vscode-classyNaming/raw/master/assets/preview.gif)
 
 ---------------
 ## License
