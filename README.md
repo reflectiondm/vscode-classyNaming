@@ -29,7 +29,7 @@ you the type name after a few keystrokes, you normally have to type in
 the name from the begining to the end. How fun can that be? No fun at all.
 
 *ClassyNaming* is there to save you from dying of boredom when naming your fields.
-Just start typing a variable name and it will suggest you the most obvious options
+Just start typing a variable name or activate an IntellySense by a keyboard shortcut and it will suggest you the most obvious options
 to chose from!
 
 ## See how it works
