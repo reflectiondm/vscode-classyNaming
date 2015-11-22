@@ -1,5 +1,5 @@
 // TODO rename variables to domain related names
-import * as di from './declarationInfo';
+import * as di from "./declarationInfo";
 
 export class CsharpParser {
 	public splitTypeName(typeName: string): string[] {
@@ -64,9 +64,9 @@ export class CsharpParser {
 	private ToCamel(input: string): string {
 		return input[0].toLowerCase() + input.substring(1);
 	}
-	
+
 	private combineWithUserInput(suggestion: string, userInput: string): string{
-		return userInput == '_' ? 
+		return userInput == "_" ?
 			userInput + suggestion :
 			userInput + this.ToPascal(suggestion);
 	}

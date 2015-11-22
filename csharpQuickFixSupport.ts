@@ -3,7 +3,7 @@ import * as parser from "./csharpParser";
 
 export class csharpQuickFixSupport implements vscode.CodeActionProvider {
 	private parser = new parser.CsharpParser();
-	
+
 	public provideCodeActions(document: vscode.TextDocument, marker: vscode.Range, context: vscode.CodeActionContext, token: vscode.CancellationToken) {
 		var memberRange = document.getWordRangeAtPosition(marker.start);
 		var quickFixMember = document.getText(memberRange);

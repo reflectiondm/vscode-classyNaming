@@ -35,15 +35,15 @@ export class DeclarationInfo {
 		var bracketCount = 0;
 		for (var i = 0; i < input.length; i++) {
 			var char = input[i];
-			if (char == '<') {
+			if (char == "<") {
 				bracketCount++;
 			}
 
 			if (bracketCount == 0) {
 				result += char;
 			}
-			
-			if (char == '>') {
+
+			if (char == ">") {
 				bracketCount--;
 			}
 		}

@@ -22,7 +22,7 @@ export class SuggestSupport implements vscode.CompletionItemProvider {
 	};
 
 	private toSuggestion(variant: string, type: string): vscode.CompletionItem {
-		var result = new vscode.CompletionItem(variant); 
+		var result = new vscode.CompletionItem(variant);
 		result.detail = type;
 		return result;
 	}
