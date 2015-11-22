@@ -1,6 +1,6 @@
 {
   "name": "ClassyNaming",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "author": {
     "name": "Andrei Zubov",
     "email": "reflection.dm@gmail.com",
@@ -10,6 +10,7 @@
   "license": "MIT",
   "displayName": "Classy Naming",
   "description": "Provides suggestions for field and parameter names for C#",
+  "icon": "icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/reflectiondm/vscode-classyNaming.git"
