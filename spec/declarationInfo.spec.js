@@ -1,4 +1,5 @@
-///</// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
+
 var DeclarationInfo = require("../out/declarationInfo").DeclarationInfo;
 var data = require("./commonTestData");
 
@@ -34,6 +35,12 @@ describe("DeclarationInfo", function () {
 			var input = "   public " + data.WellKnownInterface + " someType ";
 			var result = getTarget(input).getTypeName();
 			expect(result).toBe(data.WellKnownInterface);
+		});
+
+		it("should drop generic parameters", function () {
+			var input = "     UserManager<ApplicationUser, IList<string>> ";
+			var result = getTarget(input).getTypeName();
+			expect(result).toBe("UserManager");
 		});
 	});
 

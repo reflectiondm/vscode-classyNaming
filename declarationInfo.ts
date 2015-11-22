@@ -3,8 +3,9 @@ export class DeclarationInfo {
 		"string", "decimal", "var", "float", "bool", "boolean", "class"];
 
 	constructor(input: string) {
-		this._userInput = this.extractUserInput(input);
-		this._parameterDefinition = input.substring(0, input.length - this._userInput.length);
+		var conditionedInput = this.excludeGenerics(input);
+		this._userInput = this.extractUserInput(conditionedInput);
+		this._parameterDefinition = conditionedInput.substring(0, conditionedInput.length - this._userInput.length);
 		var members = this.getMembers(this._parameterDefinition);
 		this._typeName = this.getTypeFromMembers(members);
 	}
@@ -29,7 +30,28 @@ export class DeclarationInfo {
 		return this._userInput;
 	}
 
-	public extractUserInput(input: string): string {
+	private excludeGenerics(input: string): string {
+		var result = "";
+		var bracketCount = 0;
+		for (var i = 0; i < input.length; i++) {
+			var char = input[i];
+			if (char == '<') {
+				bracketCount++;
+			}
+
+			if (bracketCount == 0) {
+				result += char;
+			}
+			
+			if (char == '>') {
+				bracketCount--;
+			}
+		}
+
+		return result;
+	}
+
+	private extractUserInput(input: string): string {
 		for (var i = input.length - 1; i >= 0; i--) {
 			if (this.isMemberSeparator(input[i]) || input[i] == " ") {
 				return input.substring(i).trim();
