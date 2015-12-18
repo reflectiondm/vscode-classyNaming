@@ -1,14 +1,17 @@
 export class DeclarationInfo {
-  private reservedKeywords: string[] = ["public", "private", "protected", "abstract", "int",
-     "string", "decimal", "var", "float", "bool", "boolean", "class"];
+	private reservedKeywords: string[] = ["public", "private", "protected", "abstract", "int",
+		"string", "decimal", "var", "float", "bool", "boolean", "class"];
 
-     constructor(input: string) {
-       let conditionedInput = this.excludeGenerics(input);
-       this._userInput = this.extractUserInput(conditionedInput);
-       this._parameterDefinition = conditionedInput.substring(0, conditionedInput.length - this._userInput.length);
-       let members = this.getMembers(this._parameterDefinition);
-       this._fullTypeName = this.getTypeFromMembers(members);
-       this.processFullTypeName();
+	private collectionTypes: string[] = ["ICollection", "ObservableCollection", "DbSet", "List"];
+
+	constructor(input: string) {
+		this._isPlural = false;
+		let conditionedInput = this.excludeGenerics(input);
+		this._userInput = this.extractUserInput(conditionedInput);
+		this._parameterDefinition = conditionedInput.substring(0, conditionedInput.length - this._userInput.length);
+		let members = this.getMembers(this._parameterDefinition);
+		this._fullTypeName = this.getTypeFromMembers(members);
+		this.processFullTypeName();
     }
 
     private _isVariableDeclared: boolean = false;
@@ -111,10 +114,15 @@ export class DeclarationInfo {
 	}
 
     private processFullTypeName(): void {
-		if (this._fullTypeName.endsWith("]")) {
+		if (this._fullTypeName.endsWith("[]")) {
 			this._isPlural = true;
 			this._typeName = this._fullTypeName.substring(0, this._fullTypeName.length - 3);
 		}
+
+		if (this.collectionTypes.find(d => d === this._fullTypeName)) {
+			this._isPlural = true;
+		}
+
 		this._typeName = this._fullTypeName;
 	}
 }

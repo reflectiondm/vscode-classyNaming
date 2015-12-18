@@ -44,14 +44,20 @@ describe("DeclarationInfo", function () {
 		});
 	});
 
-	describe("when plural forms should set isPlural property to true", function () {
-		it("for array", function () {
+	describe("when plural forms ", function () {
+		it("should set isPlural property to true for array", function () {
 			var input = data.WellKnownInterface + "[]";
 			var result = getTarget(input).isPlural();
 			expect(result).toBe(true);
 		});
 
-
+		["ICollection", "ObservableCollection", "DbSet", "List"].forEach(function (typeName) {
+			it("should set isPlural property to true for " + typeName, function () {
+				var input = "     " + typeName + "<"+data.WellKnownInterface+"> ";
+				var target = getTarget(input);
+				expect(target.isPlural()).toBe(true);
+			});
+		});
 	});
 
 	describe("extracted userInput", function () {
