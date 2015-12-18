@@ -52,10 +52,18 @@ describe("DeclarationInfo", function () {
 		});
 
 		["ICollection", "ObservableCollection", "DbSet", "List"].forEach(function (typeName) {
-			it("should set isPlural property to true for " + typeName, function () {
-				var input = "     " + typeName + "<"+data.WellKnownInterface+"> ";
-				var target = getTarget(input);
-				expect(target.isPlural()).toBe(true);
+			describe("for " + typeName, function () {
+				var input = "     " + typeName + "<" + data.WellKnownInterface + "> ";
+
+				it("should set isPlural property to true for " + typeName, function () {
+					var target = getTarget(input);
+					expect(target.isPlural()).toBe(true);
+				});
+
+				it("should return generic type parameter as a type name for " + typeName, function () {
+					var target = getTarget(input);
+					expect(target.getTypeName()).toBe(data.WellKnownInterface);
+				});
 			});
 		});
 	});

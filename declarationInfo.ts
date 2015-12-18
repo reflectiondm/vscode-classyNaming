@@ -3,6 +3,8 @@ export class DeclarationInfo {
 		"string", "decimal", "var", "float", "bool", "boolean", "class"];
 
 	private collectionTypes: string[] = ["ICollection", "ObservableCollection", "DbSet", "List"];
+	private innerGeneric: string = "";
+
 
 	constructor(input: string) {
 		this._isPlural = false;
@@ -51,14 +53,18 @@ export class DeclarationInfo {
 			let char = input[i];
 			if (char === "<") {
 				bracketCount++;
-			}
-
-			if (bracketCount === 0) {
-				result += char;
+				continue;
 			}
 
 			if (char === ">") {
 				bracketCount--;
+				continue;
+			}
+			
+			if (bracketCount === 0) {
+				result += char;
+			} else {
+				this.innerGeneric += char;
 			}
 		}
 
@@ -117,10 +123,13 @@ export class DeclarationInfo {
 		if (this._fullTypeName.endsWith("[]")) {
 			this._isPlural = true;
 			this._typeName = this._fullTypeName.substring(0, this._fullTypeName.length - 3);
+			return;
 		}
 
 		if (this.collectionTypes.find(d => d === this._fullTypeName)) {
 			this._isPlural = true;
+			this._typeName = this.innerGeneric;
+			return;
 		}
 
 		this._typeName = this._fullTypeName;
