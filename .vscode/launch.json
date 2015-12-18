@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"configurations": [
 		{
+			"request": "launch",
 			"name": "Launch Extension",
 			"type": "extensionHost",
 			"runtimeExecutable": "${execPath}",

@@ -44,6 +44,16 @@ describe("DeclarationInfo", function () {
 		});
 	});
 
+	describe("when plural forms should set isPlural property to true", function () {
+		it("for array", function () {
+			var input = data.WellKnownInterface + "[]";
+			var result = getTarget(input).isPlural();
+			expect(result).toBe(true);
+		});
+
+
+	});
+
 	describe("extracted userInput", function () {
 		[{ line: data.WellKnownTextLine, userInput: "_" },
 			{ line: data.WellKnownTextLine, userInput: "my" }].forEach(function (td) {
