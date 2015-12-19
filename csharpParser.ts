@@ -3,9 +3,9 @@ import * as di from "./declarationInfo";
 
 export class CsharpParser {
 	public splitTypeName(typeName: string): string[] {
-		var re = /([A-Za-z]?)([a-z]+)/g;
+		let re = /([A-Za-z]?)([a-z]+)/g;
 
-		var match = re.exec(typeName);
+		let match = re.exec(typeName);
 		let result: string[] = [];
 		while (match) {
 			if (match[1]) {
@@ -20,10 +20,10 @@ export class CsharpParser {
 	}
 
 	public combineSuggestions(parts: string[]): string[] {
-		var result = [];
-		for (var i = parts.length - 1; i >= 0; i--) {
-			var suggestion = "";
-			for (var j = i; j < parts.length; j++) {
+		let result = [];
+		for (let i = parts.length - 1; i >= 0; i--) {
+			let suggestion = "";
+			for (let j = i; j < parts.length; j++) {
 				suggestion += parts[j];
 			}
 			suggestion = this.ToCamel(suggestion);
@@ -36,11 +36,16 @@ export class CsharpParser {
 		if (declarationInfo.getIsVariableDeclared()) {
 			return [];
 		}
-		var nameParts = this.splitTypeName(declarationInfo.getTypeName());
-		var suggestions = this.combineSuggestions(nameParts);
-		var result = [];
-		var userInput = declarationInfo.getUserInput();
-		if (userInput != "") {
+		
+		var typeName = declarationInfo.isPlural() ?
+			declarationInfo.getTypeName() + "s" :
+			declarationInfo.getTypeName();
+		
+		let nameParts = this.splitTypeName(typeName);
+		let suggestions = this.combineSuggestions(nameParts);
+		let result = [];
+		let userInput = declarationInfo.getUserInput();
+		if (userInput !== "") {
 			suggestions.forEach((s) => result.push(this.combineWithUserInput(s, userInput)));
 		}
 		else {
@@ -66,7 +71,7 @@ export class CsharpParser {
 	}
 
 	private combineWithUserInput(suggestion: string, userInput: string): string{
-		return userInput == "_" ?
+		return userInput === "_" ?
 			userInput + suggestion :
 			userInput + this.ToPascal(suggestion);
 	}

@@ -52,16 +52,25 @@ describe("C# parser", function () {
 				var result = getSuggestions(input);
 				expect(result).toContain("mySomeType");
 			});
-			
-			it('should provide suggestions with lowercase character after  _ ', function(){
+
+			it('should provide suggestions with lowercase character after  _ ', function () {
 				var input = "  public ISomeType _";
 				var result = getSuggestions(input);
 				expect(result).toContain("_someType");
 				expect(result).toContain("_type");
 			});
+
+			["ICollection", "ObservableCollection", "DbSet", "List"].forEach(function (typeName) {
+				it("should pluralize suggested name for collections", function () { 
+					var input = "   public " + typeName + "<" + data.WellKnownInterface + "> ";
+					var result = getSuggestions(input);
+					expect(result).toContain("someInterfaces");
+					expect(result).toContain("interfaces");
+				});
+			});
 		});
-		
-		it("should contain typeName", function() {
+
+		it("should contain typeName", function () {
 			var input = data.WellKnownTextLine;
 			var result = target.getParsingResult(input).typeName;
 			expect(result).toBe(data.WellKnownInterface);
