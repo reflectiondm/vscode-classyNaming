@@ -122,7 +122,7 @@ export class DeclarationInfo {
     private processFullTypeName(): void {
 		if (this._fullTypeName.endsWith("[]")) {
 			this._isPlural = true;
-			this._typeName = this._fullTypeName.substring(0, this._fullTypeName.length - 3);
+			this._typeName = this._fullTypeName.substring(0, this._fullTypeName.length - 2);
 			return;
 		}
 

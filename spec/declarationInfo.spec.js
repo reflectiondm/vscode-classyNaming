@@ -47,8 +47,9 @@ describe("DeclarationInfo", function () {
 	describe("when plural forms ", function () {
 		it("should set isPlural property to true for array", function () {
 			var input = data.WellKnownInterface + "[]";
-			var result = getTarget(input).isPlural();
-			expect(result).toBe(true);
+			var target = getTarget(input);
+			expect(target.isPlural()).toBe(true);
+			expect(target.getTypeName()).toBe(data.WellKnownInterface);
 		});
 
 		["ICollection", "ObservableCollection", "DbSet", "List"].forEach(function (typeName) {
