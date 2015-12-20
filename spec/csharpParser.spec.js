@@ -68,6 +68,16 @@ describe("C# parser", function () {
 					expect(result).toContain("interfaces");
 				});
 			});
+            
+            [   ["Box", "boxes"], 
+                ["Cross", "crosses"],
+                ["Index", "indices"]].forEach(function(param){
+                it("should use correct plural form for " + param[0], function(){
+                    var input = "   public List<"+ param[0] + "> ";
+                    var result = getSuggestions(input);
+                    expect(result).toContain(param[1]);
+                });
+            });
 		});
 
 		it("should contain typeName", function () {

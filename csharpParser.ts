@@ -1,5 +1,5 @@
-// TODO rename variables to domain related names
 import * as di from "./declarationInfo";
+import * as pluralizer from "pluralize";
 
 export class CsharpParser {
     public splitTypeName(typeName: string): string[] {
@@ -38,7 +38,7 @@ export class CsharpParser {
         }
 
         let typeName = declarationInfo.isPlural() ?
-            declarationInfo.getTypeName() + "s" :
+            pluralizer.plural(declarationInfo.getTypeName()) :
             declarationInfo.getTypeName();
 
         let nameParts = this.splitTypeName(typeName);
@@ -55,10 +55,10 @@ export class CsharpParser {
     }
 
     public getParsingResult(input: string): ParsingResult {
-        var declarationInfo = new di.DeclarationInfo(input);
-        var typeName = declarationInfo.getTypeName();
-        var suggestions = this.getSuggestions(declarationInfo);
-        var userInput = declarationInfo.getUserInput();
+        let declarationInfo = new di.DeclarationInfo(input);
+        let typeName = declarationInfo.getTypeName();
+        let suggestions = this.getSuggestions(declarationInfo);
+        let userInput = declarationInfo.getUserInput();
         return new ParsingResult(suggestions, typeName, userInput);
     }
 

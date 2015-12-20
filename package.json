@@ -18,8 +18,10 @@
   "homepage": "https://github.com/reflectiondm/vscode-classyNaming/blob/master/README.md",
   "bugs": "https://github.com/reflectiondm/vscode-classyNaming/issues",
   "categories": [
-        "Snippets", "Languages", "Other"
-    ],
+    "Snippets",
+    "Languages",
+    "Other"
+  ],
   "engines": {
     "vscode": "0.10.x"
   },
@@ -31,11 +33,11 @@
     "commands": []
   },
   "extensionDependencies": [
-        "vscode.csharp"
-    ],
+    "vscode.csharp"
+  ],
   "scripts": {
-		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
     "build": "node ./node_modules/vscode/bin/compile",
     "test": "jasmine"
   },
@@ -43,5 +45,8 @@
     "jasmine": "^2.3.2",
     "vscode": "0.10.x",
     "typescript": "~1.6.2"
+  },
+  "dependencies": {
+    "pluralize": "^1.2.1"
   }
 }
