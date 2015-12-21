@@ -1,6 +1,8 @@
 .vscode/**
 typings/**
 assets/**
+node_modules/.bin/**
+**/*.js.map
 **/*.ts
 .gitignore
 tsconfig.json
