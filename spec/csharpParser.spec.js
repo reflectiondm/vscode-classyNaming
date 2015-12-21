@@ -60,8 +60,8 @@ describe("C# parser", function () {
 				expect(result).toContain("_type");
 			});
 
-			["ICollection", "ObservableCollection", "DbSet", "List"].forEach(function (typeName) {
-				it("should pluralize suggested name for collections", function () { 
+			["ICollection", "ObservableCollection", "DbSet", "List", "IEnumerable", "IList", "LinkedList", ].forEach(function (typeName) {
+				it("should pluralize suggested name for collections like " + typeName, function () { 
 					var input = "   public " + typeName + "<" + data.WellKnownInterface + "> ";
 					var result = getSuggestions(input);
 					expect(result).toContain("someInterfaces");

@@ -2,7 +2,7 @@ export class DeclarationInfo {
     private reservedKeywords: string[] = ["public", "private", "protected", "abstract", "int",
         "string", "decimal", "var", "float", "bool", "boolean", "class"];
 
-    private collectionTypes: string[] = ["ICollection", "ObservableCollection", "DbSet", "List"];
+    private collectionTypes: string[] = ["Collection", "DbSet", "List", "Enumerable"];
     private innerGeneric: string = "";
 
 
@@ -126,7 +126,7 @@ export class DeclarationInfo {
             return;
         }
 
-        if (this.collectionTypes.find(d => d === this._fullTypeName)) {
+        if (this.collectionTypes.find(d => this._fullTypeName.endsWith(d))) {
             this._isPlural = true;
             this._typeName = this.innerGeneric;
             return;
