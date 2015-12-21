@@ -56,7 +56,7 @@ export class CsharpParser {
 
     public getParsingResult(input: string): ParsingResult {
         let declarationInfo = new di.DeclarationInfo(input);
-        let typeName = declarationInfo.getTypeName();
+        let typeName = declarationInfo.getFullTypeName();
         let suggestions = this.getSuggestions(declarationInfo);
         let userInput = declarationInfo.getUserInput();
         return new ParsingResult(suggestions, typeName, userInput);

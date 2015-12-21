@@ -73,9 +73,13 @@ describe("C# parser", function () {
                 ["Cross", "crosses"],
                 ["Index", "indices"]].forEach(function(param){
                 it("should use correct plural form for " + param[0], function(){
-                    var input = "   public List<"+ param[0] + "> ";
-                    var result = getSuggestions(input);
-                    expect(result).toContain(param[1]);
+                    var fullTypeName = "List<" + param[0] + ">";
+                    var input = "   public "+ fullTypeName + " ";
+                    var result = target.getParsingResult(input); 
+                    var suggestions = result.suggestions;
+                    var typeName = result.typeName; 
+                    expect(suggestions).toContain(param[1]);
+                    expect(typeName).toBe(fullTypeName);
                 });
             });
 		});

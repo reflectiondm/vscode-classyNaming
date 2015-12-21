@@ -129,6 +129,7 @@ export class DeclarationInfo {
         if (this.collectionTypes.find(d => this._fullTypeName.endsWith(d))) {
             this._isPlural = true;
             this._typeName = this.innerGeneric;
+            this._fullTypeName += "<" + this.innerGeneric + ">";
             return;
         }
 
