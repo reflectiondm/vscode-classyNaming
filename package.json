@@ -44,7 +44,7 @@
   "devDependencies": {
     "jasmine": "^2.3.2",
     "vscode": "0.10.x",
-    "typescript": "~1.6.2"
+    "typescript": "~1.7.5"
   },
   "dependencies": {
     "pluralize": "^1.2.1"
