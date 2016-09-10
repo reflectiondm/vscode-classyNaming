@@ -1,9 +1,7 @@
 import * as vscode from "vscode";
 import * as csharp from "./csharpParser";
 
-export let modeId: string = "csharp";
-
-export class SuggestSupport implements vscode.CompletionItemProvider {
+export default class SuggestSupport implements vscode.CompletionItemProvider {
 
     private parser: csharp.CsharpParser = new csharp.CsharpParser();
 

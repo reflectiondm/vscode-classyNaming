@@ -1,9 +1,11 @@
 import * as vscode from "vscode";
-import * as csharp from "./csharpNamingSuggestions";
+import SuggestSupport from "./csharpNamingSuggestions";
+
+const modeId: string = "csharp";
 
 // this method is called when your extension is activated
 export function activate() {
-    let cSharpSuggestSupport = new csharp.SuggestSupport();
+    const cSharpSuggestSupport = new SuggestSupport();
     // Register C# naming suggestion support	
-    vscode.languages.registerCompletionItemProvider(csharp.modeId, cSharpSuggestSupport);
+    vscode.languages.registerCompletionItemProvider(modeId, cSharpSuggestSupport);
 }

@@ -1,5 +1,5 @@
-export class DeclarationInfo {
-    private reservedKeywords: string[] = ["public", "private", "protected", "abstract", "int",
+export default class DeclarationInfo {
+    private reservedKeywords: string[] = ["public", "static", "readonly", "private", "protected", "abstract", "int",
         "string", "decimal", "var", "float", "bool", "boolean", "class"];
 
     private collectionTypes: string[] = ["Collection", "DbSet", "List", "Enumerable"];

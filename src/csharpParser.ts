@@ -1,4 +1,4 @@
-import * as di from "./declarationInfo";
+import DeclarationInfo from "./declarationInfo";
 import * as pluralizer from "pluralize";
 
 export class CsharpParser {
@@ -32,7 +32,7 @@ export class CsharpParser {
         return result;
     }
 
-    public getSuggestions(declarationInfo: di.DeclarationInfo): string[] {
+    public getSuggestions(declarationInfo: DeclarationInfo): string[] {
         if (declarationInfo.getIsVariableDeclared()) {
             return [];
         }
@@ -55,7 +55,7 @@ export class CsharpParser {
     }
 
     public getParsingResult(input: string): ParsingResult {
-        let declarationInfo = new di.DeclarationInfo(input);
+        let declarationInfo = new DeclarationInfo(input);
         let typeName = declarationInfo.getFullTypeName();
         let suggestions = this.getSuggestions(declarationInfo);
         let userInput = declarationInfo.getUserInput();
