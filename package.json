@@ -23,7 +23,7 @@
     "Other"
   ],
   "engines": {
-    "vscode": "0.10.x"
+    "vscode": "^1.4.0"
   },
   "activationEvents": [
     "onLanguage:csharp"
@@ -35,13 +35,11 @@
   "scripts": {
     "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
     "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-    "build": "node ./node_modules/vscode/bin/compile",
-    "test": "jasmine"
+    "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "devDependencies": {
-    "jasmine": "^2.3.2",
-    "vscode": "0.10.x",
-    "typescript": "~1.7.5"
+    "typescript": "^1.8.5",
+    "vscode": "^0.11.0"
   },
   "dependencies": {
     "pluralize": "^1.2.1"
