@@ -1,17 +1,19 @@
 export default class DeclarationInfo {
-    private reservedKeywords: string[] = ["public", "static", "readonly", "private", "protected", "abstract", "int",
-        "string", "decimal", "var", "float", "bool", "boolean", "class"];
+    private reservedKeywords: string[] = [
+        "public", "const", "internal", "static", "readonly", "private", "protected", "abstract", "int",
+        "byte", "string", "double", "decimal", "var", "internal", "object", "float", "bool", "boolean",
+        "class", "long", "out", "ref", "volatile", "sbyte", "short", "this", "uint", "ulong", "ushort",
+        "virtual"];
 
-    private collectionTypes: string[] = ["Collection", "DbSet", "List", "Enumerable"];
+    private collectionTypes: string[] = ["Collection", "Set", "List", "Enumerable"];
     private innerGeneric: string = "";
-
 
     constructor(input: string) {
         this._isPlural = false;
-        let conditionedInput = this.excludeGenerics(input);
+        const conditionedInput = this.excludeGenerics(input);
         this._userInput = this.extractUserInput(conditionedInput);
         this._parameterDefinition = conditionedInput.substring(0, conditionedInput.length - this._userInput.length);
-        let members = this.getMembers(this._parameterDefinition);
+        const members = this.getMembers(this._parameterDefinition);
         this._fullTypeName = this.getTypeFromMembers(members);
         this.processFullTypeName();
     }

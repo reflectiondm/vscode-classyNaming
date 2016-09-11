@@ -40,7 +40,7 @@ suite("C# parser", function () {
                 });
 
 
-            ["public", "private", "static", "readonly", "protected", "abstract", "int", "class",
+            ["public", "private", "const", "static", "readonly", "protected", "abstract", "int", "class",
                 "string", "decimal", "var", "float", "bool", "boolean"].forEach(function (ignoreCase) {
                     test("should ignore " + ignoreCase + " keyword", function () {
                         const input = "   " + ignoreCase + " ";
@@ -96,6 +96,12 @@ suite("C# parser", function () {
             const input = data.WellKnownTextLine;
             const result = target.getParsingResult(input).typeName;
             expect(result).to.equal(data.WellKnownInterface);
+        });
+
+        test("should igore multiple keywords", () => {
+            const input = " private const ISomeInterface ";
+            const result = target.getParsingResult(input).typeName;
+            expect(result).to.equal("ISomeInterface");
         });
     });
 });

@@ -10,6 +10,6 @@ tsconfig.json
 assets/**
 node_modules/.bin/**
 **/*.ts
-tsd.json
+typings.json
 spec/**/*.*
 .travis.yml

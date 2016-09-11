@@ -1,49 +1,51 @@
 {
-  "name": "ClassyNaming",
-  "version": "0.1.5",
-  "author": {
-    "name": "Andrei Zubov",
-    "email": "reflection.dm@gmail.com",
-    "url": "https://github.com/reflectiondm"
-  },
-  "publisher": "reflectiondm",
-  "license": "MIT",
-  "displayName": "Classy Naming",
-  "description": "Provides suggestions for field and parameter names for C#",
-  "icon": "icon.png",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/reflectiondm/vscode-classyNaming.git"
-  },
-  "homepage": "https://github.com/reflectiondm/vscode-classyNaming/blob/master/README.md",
-  "bugs": "https://github.com/reflectiondm/vscode-classyNaming/issues",
-  "categories": [
-    "Snippets",
-    "Languages",
-    "Other"
-  ],
-  "engines": {
-    "vscode": "^1.4.0"
-  },
-  "activationEvents": [
-    "onLanguage:csharp"
-  ],
-  "main": "./out/extension",
-  "contributes": {
-    "commands": []
-  },
-  "scripts": {
-    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-    "build": "node ./node_modules/vscode/bin/compile -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
-  },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "typescript": "^1.8.5",
-    "vscode": "^0.11.0"
-  },
-  "dependencies": {
-    "pluralize": "^1.2.1"
-  }
+    "name": "ClassyNaming",
+    "version": "1.0.0",
+    "author": {
+        "name": "Andrei Zubov",
+        "email": "reflection.dm@gmail.com",
+        "url": "https://github.com/reflectiondm"
+    },
+    "publisher": "reflectiondm",
+    "license": "MIT",
+    "displayName": "Classy Naming",
+    "description": "Provides suggestions for field and parameter names for C#",
+    "icon": "icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/reflectiondm/vscode-classyNaming.git"
+    },
+    "homepage": "https://github.com/reflectiondm/vscode-classyNaming/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/reflectiondm/vscode-classyNaming/issues"
+    },
+    "categories": [
+        "Snippets",
+        "Languages",
+        "Other"
+    ],
+    "engines": {
+        "vscode": "^1.4.0"
+    },
+    "activationEvents": [
+        "onLanguage:csharp"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": []
+    },
+    "scripts": {
+        "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+        "build": "node ./node_modules/vscode/bin/compile -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "devDependencies": {
+        "chai": "^3.5.0",
+        "typescript": "^1.8.5",
+        "vscode": "^0.11.0"
+    },
+    "dependencies": {
+        "pluralize": "^1.2.1"
+    }
 }
