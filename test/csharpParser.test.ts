@@ -1,4 +1,3 @@
-/// <reference path="../typings/tsd.d.ts" />
 import {CsharpParser} from "../src/csharpParser";
 import data from "./commonTestData";
 import { expect } from "chai";
