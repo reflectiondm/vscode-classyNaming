@@ -1,4 +1,4 @@
-import {CsharpParser} from "../src/csharpParser";
+import { CsharpParser } from "../src/csharpParser";
 import data from "./commonTestData";
 import { expect } from "chai";
 
@@ -8,14 +8,14 @@ suite("C# parser", function () {
     const wellKnownTextLine = " public TestConstructor(ISomeInterface ";
 
     suite("split type name", function () {
-        test("should break the interface in parts based on case, without I", function () {
+        test("should break the interface in parts based on case, without I, lowercased", function () {
             const result = target.splitTypeName(wellKnownInterface);
-            expect(result).to.eql(["Some", "Interface"]);
+            expect(result).to.eql(["some", "interface"]);
         });
 
-        test("should break the className in parts based on case", function () {
+        test("should break the className in parts based on case, lowercased", function () {
             const result = target.splitTypeName("TestCaseServiceProvider");
-            expect(result).to.eql(["Test", "Case", "Service", "Provider"]);
+            expect(result).to.eql(["test", "case", "service", "provider"]);
         });
     });
 
@@ -60,6 +60,18 @@ suite("C# parser", function () {
                 expect(result).to.contain("mySomeType");
             });
 
+            test("should merge user input with name part if they are alike", function () {
+                const input = "  public ISomeComplexType som";
+                const result = getSuggestions(input);
+                expect(result).to.eql(["someType", "someComplexType"]);
+            });
+
+            test("should not provide duplicate suggestions", function () {
+                const input = "  public ISomeType some";
+                const result = getSuggestions(input);
+                expect(result).to.eql(["someType"]);
+            });
+
             test("should provide suggestions with lowercase character after  _ ", function () {
                 const input = "  public ISomeType _";
                 const result = getSuggestions(input);
@@ -67,7 +79,7 @@ suite("C# parser", function () {
                 expect(result).to.contain("_type");
             });
 
-            ["ICollection", "ObservableCollection", "DbSet", "List", "IEnumerable", "IList", "LinkedList", ].forEach(function (typeName) {
+            ["ICollection", "ObservableCollection", "DbSet", "List", "IEnumerable", "IList", "LinkedList",].forEach(function (typeName) {
                 test("should pluralize suggested name for collections like " + typeName, function () {
                     const input = "   public " + typeName + "<" + data.WellKnownInterface + "> ";
                     const result = getSuggestions(input);
@@ -77,18 +89,18 @@ suite("C# parser", function () {
             });
 
             [["Box", "boxes"],
-                ["Cross", "crosses"],
-                ["Index", "indices"]].forEach(function (param) {
-                    test("should use correct plural form for " + param[0], function () {
-                        const fullTypeName = "List<" + param[0] + ">";
-                        const input = "   public " + fullTypeName + " ";
-                        const result = target.getParsingResult(input);
-                        const suggestions = result.suggestions;
-                        const typeName = result.typeName;
-                        expect(suggestions).to.contain(param[1]);
-                        expect(typeName).to.equal(fullTypeName);
-                    });
+            ["Cross", "crosses"],
+            ["Index", "indices"]].forEach(function (param) {
+                test("should use correct plural form for " + param[0], function () {
+                    const fullTypeName = "List<" + param[0] + ">";
+                    const input = "   public " + fullTypeName + " ";
+                    const result = target.getParsingResult(input);
+                    const suggestions = result.suggestions;
+                    const typeName = result.typeName;
+                    expect(suggestions).to.contain(param[1]);
+                    expect(typeName).to.equal(fullTypeName);
                 });
+            });
         });
 
         test("should contain typeName", function () {

@@ -3,10 +3,10 @@ import * as pluralizer from "pluralize";
 
 export class CsharpParser {
     public splitTypeName(typeName: string): string[] {
-        let re = /([A-Za-z]?)([a-z]+)/g;
+        const re = /([A-Za-z]?)([a-z]+)/g;
 
         let match = re.exec(typeName);
-        let result: string[] = [];
+        const result: string[] = [];
         while (match) {
             if (match[1]) {
                 result.push([match[1].toUpperCase(), match[2]].join(""));
@@ -16,15 +16,15 @@ export class CsharpParser {
             }
             match = re.exec(typeName);
         }
-        return result;
+        return result.map(m => m.toLowerCase());
     }
 
     public combineSuggestions(parts: string[]): string[] {
-        let result = [];
+        const result = [];
         for (let i = parts.length - 1; i >= 0; i--) {
             let suggestion = "";
             for (let j = i; j < parts.length; j++) {
-                suggestion += parts[j];
+                suggestion += this.ToPascal(parts[j]);
             }
             suggestion = this.ToCamel(suggestion);
             result.push(suggestion);
@@ -37,28 +37,30 @@ export class CsharpParser {
             return [];
         }
 
-        let typeName = declarationInfo.isPlural() ?
+        const typeName = declarationInfo.isPlural() ?
             pluralizer.plural(declarationInfo.getTypeName()) :
             declarationInfo.getTypeName();
 
-        let nameParts = this.splitTypeName(typeName);
-        let suggestions = this.combineSuggestions(nameParts);
-        let result = [];
-        let userInput = declarationInfo.getUserInput();
+        const nameParts = this.splitTypeName(typeName);
+        const suggestions = this.combineSuggestions(nameParts);
+        const result = new Set();
+        const userInput = declarationInfo.getUserInput();
+        const prefix = nameParts.find(part => part.includes(userInput)) || userInput;
         if (userInput !== "") {
-            suggestions.forEach((s) => result.push(this.combineWithUserInput(s, userInput)));
+            suggestions.map(s => s.includes(prefix, 0) ? s : this.combineWithUserInput(s, prefix))
+                .forEach(s => result.add(s));
+        } else {
+            suggestions.forEach((s) => result.add(s));
         }
-        else {
-            suggestions.forEach((s) => result.push(s));
-        }
-        return result;
+
+        return [...result];
     }
 
     public getParsingResult(input: string): ParsingResult {
-        let declarationInfo = new DeclarationInfo(input);
-        let typeName = declarationInfo.getFullTypeName();
-        let suggestions = this.getSuggestions(declarationInfo);
-        let userInput = declarationInfo.getUserInput();
+        const declarationInfo = new DeclarationInfo(input);
+        const typeName = declarationInfo.getFullTypeName();
+        const suggestions = this.getSuggestions(declarationInfo);
+        const userInput = declarationInfo.getUserInput();
         return new ParsingResult(suggestions, typeName, userInput);
     }
 
