@@ -28,15 +28,21 @@ suite("C# parser", function () {
             [wellKnownTextLine,
                 " public static TestConstructor(ISomeInterface ",
                 " public readonly TestConstructor(ISomeInterface "]
-                .forEach(() => {
+                .forEach((line) => {
                     test("should be able to provide suggested names", function () {
-                        const result = getSuggestions(wellKnownTextLine);
+                        const result = getSuggestions(line);
                         expect(result).to.eql([
                             "interface",
                             "someInterface"
                         ]);
                     });
                 });
+
+            // TODO: make this pass:
+            // test("should not react on incompleted assignments", () => {
+            //     const result = getSuggestions(" public TestConstructor(ISomeInterface");
+            //     expect(result).to.eql([]);
+            // });
 
 
             ["public", "private", "const", "static", "readonly", "protected", "abstract", "int", "class",

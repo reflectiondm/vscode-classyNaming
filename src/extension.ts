@@ -14,8 +14,6 @@ export function activate() {
         getCharacters("a", "z"),
         getCharacters("0", "9")
     );
-
-    console.log(triggerCharactes);
     // Register C# naming suggestion support
     vscode.languages.registerCompletionItemProvider(modeId, cSharpSuggestSupport, ...triggerCharactes);
 }

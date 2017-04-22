@@ -10,7 +10,7 @@ export default class SuggestSupport implements vscode.CompletionItemProvider {
         const start = new vscode.Position(position.line, 0);
         const range = new vscode.Range(start, position);
         const text = document.getText(range);
-        console.log(`parsing: ${text}`);
+        // console.log(`parsing: ${text}`);
         const parsingResult = this.parser.getParsingResult(text);
         const type = parsingResult.typeName;
         const overwriteBefore = parsingResult.userInput.length;
