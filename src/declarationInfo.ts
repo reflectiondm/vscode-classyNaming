@@ -23,6 +23,11 @@ export default class DeclarationInfo {
         return this._isVariableDeclared;
     }
 
+    private _isTypeDeclared: boolean = false;
+    public getIsTypeDeclared(): boolean {
+        return this._isTypeDeclared;
+    }
+
     private _fullTypeName: string;
     public getFullTypeName(): string {
         return this._fullTypeName;
@@ -55,6 +60,7 @@ export default class DeclarationInfo {
             let char = input[i];
             if (char === "<") {
                 bracketCount++;
+                this._isTypeDeclared = false;
                 continue;
             }
 
@@ -64,6 +70,7 @@ export default class DeclarationInfo {
             }
 
             if (bracketCount === 0) {
+                this._isTypeDeclared = true;
                 result += char;
             } else {
                 this.innerGeneric += char;

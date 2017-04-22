@@ -71,22 +71,36 @@ suite("DeclarationInfo", () => {
 
     suite("extracted userInput", () => {
         [{ line: data.WellKnownTextLine, userInput: "_" },
-            { line: data.WellKnownTextLine, userInput: "my" }].forEach(td => {
-                test("should be " + td.userInput, () => {
-                    const input = td.line + td.userInput;
-                    const result = getTarget(input).getUserInput();
-                    expect(result).to.equal(td.userInput);
-                });
+        { line: data.WellKnownTextLine, userInput: "my" }].forEach(td => {
+            test("should be " + td.userInput, () => {
+                const input = td.line + td.userInput;
+                const result = getTarget(input).getUserInput();
+                expect(result).to.equal(td.userInput);
             });
+        });
     });
 
     suite("extracted isVariableDeclared", () => {
         [{ text: data.WellKnownTextLine + "someType", expected: false },
-            { text: data.WellKnownTextLine + "someType" + " ", expected: true }].forEach(td => {
-                test("should be " + td.expected + " for " + "'" + td.text + "'", () => {
-                    const result = getTarget(td.text).getIsVariableDeclared();
-                    expect(result).to.equal(td.expected);
-                });
+        { text: data.WellKnownTextLine + "someType" + " ", expected: true }].forEach(td => {
+            test("should be " + td.expected + " for " + "'" + td.text + "'", () => {
+                const result = getTarget(td.text).getIsVariableDeclared();
+                expect(result).to.equal(td.expected);
             });
+        });
+    });
+
+    suite("extracted isTypeDeclared", () => {
+        [{ text: "     IList<IFooBoo>", expected: false },
+        { text: "     ISomeType<IList<IFooBoo>", expected: false },
+        { text: "     IList<IFooBoo> ", expected: true },
+        { text: "     ISomeType<IList<IFooBoo>> ", expected: true },
+        { text: "     private static ISomeType", expected: true },
+        { text: "     IList<IFooBoo", expected: false }].forEach(td => {
+            test("should be " + td.expected + " for " + "'" + td.text + "'", () => {
+                const result = getTarget(td.text).getIsTypeDeclared();
+                expect(result).to.equal(td.expected);
+            });
+        });
     });
 });

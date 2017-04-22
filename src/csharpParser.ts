@@ -33,7 +33,7 @@ export class CsharpParser {
     }
 
     public getSuggestions(declarationInfo: DeclarationInfo): string[] {
-        if (declarationInfo.getIsVariableDeclared()) {
+        if (declarationInfo.getIsVariableDeclared() || !declarationInfo.getIsTypeDeclared()) {
             return [];
         }
 

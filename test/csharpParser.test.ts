@@ -79,13 +79,20 @@ suite("C# parser", function () {
                 expect(result).to.contain("_type");
             });
 
-            ["ICollection", "ObservableCollection", "DbSet", "List", "IEnumerable", "IList", "LinkedList",].forEach(function (typeName) {
+            ["ICollection", "ObservableCollection", "DbSet", "List", "IEnumerable", "IList", "LinkedList"]
+            .forEach(function (typeName) {
                 test("should pluralize suggested name for collections like " + typeName, function () {
                     const input = "   public " + typeName + "<" + data.WellKnownInterface + "> ";
                     const result = getSuggestions(input);
                     expect(result).to.contain("someInterfaces");
                     expect(result).to.contain("interfaces");
                 });
+            });
+
+            test("should not complete unfinished generic definitions", () => {
+                const input = "		IList<FooBo";
+                const result = getSuggestions(input);
+                expect(result).to.eql([]);
             });
 
             [["Box", "boxes"],
