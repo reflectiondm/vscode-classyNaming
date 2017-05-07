@@ -13,3 +13,5 @@ node_modules/.bin/**
 typings.json
 spec/**/*.*
 .travis.yml
+yarn.lock
+npm-debug.log*
