@@ -3,7 +3,7 @@ export default class DeclarationInfo {
         "public", "const", "internal", "static", "readonly", "private", "protected", "abstract", "int",
         "byte", "string", "double", "decimal", "var", "internal", "object", "float", "bool", "boolean",
         "class", "long", "out", "ref", "volatile", "sbyte", "short", "this", "uint", "ulong", "ushort",
-        "virtual"];
+        "virtual", "interface", "namespace"];
 
     private collectionTypes: string[] = ["Collection", "Set", "List", "Enumerable"];
     private innerGeneric: string = "";

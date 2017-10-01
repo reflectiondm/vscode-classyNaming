@@ -1,6 +1,6 @@
 {
     "name": "classynaming",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "author": {
         "name": "Andrei Zubov",
         "email": "reflection.dm@gmail.com",
@@ -25,7 +25,7 @@
         "Other"
     ],
     "engines": {
-        "vscode": "^1.1.0"
+        "vscode": "^1.1.5"
     },
     "activationEvents": [
         "onLanguage:csharp"
