@@ -16,7 +16,7 @@ function concat(...args) {
 
 export default {
     getCharacters,
-    concat
+    concat,
 };
 
 export { getCharacters, concat };

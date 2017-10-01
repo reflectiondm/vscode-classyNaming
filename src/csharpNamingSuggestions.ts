@@ -6,7 +6,7 @@ export default class SuggestSupport implements vscode.CompletionItemProvider {
     private parser: CsharpParser = new CsharpParser();
 
     public provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): Thenable<vscode.CompletionItem[]> {
-        //TODO: Write a testcase for it
+        // TODO: Write a testcase for it
         const start = new vscode.Position(position.line, 0);
         const range = new vscode.Range(start, position);
         const text = document.getText(range);
@@ -17,11 +17,11 @@ export default class SuggestSupport implements vscode.CompletionItemProvider {
         const suggestions = parsingResult.suggestions.map((v) => this.toSuggestion(v, type));
 
         return Promise.resolve(suggestions);
-    };
+    }
 
     private toSuggestion(variant: string, type: string): vscode.CompletionItem {
-        let result = new vscode.CompletionItem(variant);
+        const result = new vscode.CompletionItem(variant);
         result.detail = type;
         return result;
     }
-};
+}

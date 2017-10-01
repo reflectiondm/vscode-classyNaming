@@ -8,12 +8,13 @@ const modeId: string = "csharp";
 // this method is called when your extension is activated
 export function activate() {
     const cSharpSuggestSupport = new SuggestSupport();
+    // Register C# naming suggestion support
     const triggerCharactes = concat(
         [" ", "_"],
         getCharacters("A", "Z"),
         getCharacters("a", "z"),
-        getCharacters("0", "9")
+        getCharacters("0", "9"),
     );
-    // Register C# naming suggestion support
-    vscode.languages.registerCompletionItemProvider(modeId, cSharpSuggestSupport, ...triggerCharactes);
+    vscode.languages.registerCompletionItemProvider(modeId, cSharpSuggestSupport);
+    console.log('console is working');
 }

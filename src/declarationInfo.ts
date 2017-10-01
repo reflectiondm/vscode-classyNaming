@@ -7,60 +7,59 @@ export default class DeclarationInfo {
 
     private collectionTypes: string[] = ["Collection", "Set", "List", "Enumerable"];
     private innerGeneric: string = "";
+    private isVariableDeclared: boolean = false;
+    private isTypeDeclared: boolean = false;
+    private fullTypeName: string;
+    private typeName: string;
+    private parameterDefinition: string;
+    private userInput: string;
+    private isPlural: boolean;
 
     constructor(input: string) {
-        this._isPlural = false;
+        this.isPlural = false;
         const conditionedInput = this.excludeGenerics(input);
-        this._userInput = this.extractUserInput(conditionedInput);
-        this._parameterDefinition = conditionedInput.substring(0, conditionedInput.length - this._userInput.length);
-        const members = this.getMembers(this._parameterDefinition);
-        this._fullTypeName = this.getTypeFromMembers(members);
+        this.userInput = this.extractUserInput(conditionedInput);
+        this.parameterDefinition = conditionedInput.substring(0, conditionedInput.length - this.userInput.length);
+        const members = this.getMembers(this.parameterDefinition);
+        this.fullTypeName = this.getTypeFromMembers(members);
         this.processFullTypeName();
     }
 
-    private _isVariableDeclared: boolean = false;
     public getIsVariableDeclared(): boolean {
-        return this._isVariableDeclared;
+        return this.isVariableDeclared;
     }
 
-    private _isTypeDeclared: boolean = false;
     public getIsTypeDeclared(): boolean {
-        return this._isTypeDeclared;
+        return this.isTypeDeclared;
     }
 
-    private _fullTypeName: string;
     public getFullTypeName(): string {
-        return this._fullTypeName;
+        return this.fullTypeName;
     }
 
-    private _typeName: string;
     public getTypeName(): string {
-        return this._typeName;
+        return this.typeName;
     }
 
-    private _parameterDefinition: string;
     public getParameterDefinition(): string {
-        return this._parameterDefinition;
+        return this.parameterDefinition;
     }
 
-    private _userInput: string;
     public getUserInput(): string {
-        return this._userInput;
+        return this.userInput;
     }
 
-    private _isPlural: boolean;
-    public isPlural(): boolean {
-        return this._isPlural;
+    public getIsPlural(): boolean {
+        return this.isPlural;
     }
 
     private excludeGenerics(input: string): string {
         let result = "";
         let bracketCount = 0;
-        for (let i = 0; i < input.length; i++) {
-            let char = input[i];
+        for (const char of input) {
             if (char === "<") {
                 bracketCount++;
-                this._isTypeDeclared = false;
+                this.isTypeDeclared = false;
                 continue;
             }
 
@@ -70,7 +69,7 @@ export default class DeclarationInfo {
             }
 
             if (bracketCount === 0) {
-                this._isTypeDeclared = true;
+                this.isTypeDeclared = true;
                 result += char;
             } else {
                 this.innerGeneric += char;
@@ -87,7 +86,7 @@ export default class DeclarationInfo {
             }
         }
         return "";
-    };
+    }
 
     private isMemberSeparator(c: string): boolean {
         return c === "("
@@ -101,7 +100,7 @@ export default class DeclarationInfo {
     }
 
     private getMostLikelyMemberDeclaration(input: string): string {
-        let end = input.length;
+        const end = input.length;
         for (let i = input.length - 1; i > 0; i--) {
             if (this.isMemberSeparator(input[i])) {
                 return input.substring(i + 1, end);
@@ -112,12 +111,12 @@ export default class DeclarationInfo {
 
     private getTypeFromMembers(members: string[]): string {
         for (let i = 0; i < members.length; i++) {
-            let member = members[i];
+            const member = members[i];
             if (member === "" || this.isReservedKeyword(member)) {
                 continue;
             }
             if (i !== members.length - 1) {
-                this._isVariableDeclared = true;
+                this.isVariableDeclared = true;
             }
             return member;
         }
@@ -129,19 +128,19 @@ export default class DeclarationInfo {
     }
 
     private processFullTypeName(): void {
-        if (this._fullTypeName.endsWith("[]")) {
-            this._isPlural = true;
-            this._typeName = this._fullTypeName.substring(0, this._fullTypeName.length - 2);
+        if (this.fullTypeName.endsWith("[]")) {
+            this.isPlural = true;
+            this.typeName = this.fullTypeName.substring(0, this.fullTypeName.length - 2);
             return;
         }
 
-        if (this.collectionTypes.find(d => this._fullTypeName.endsWith(d))) {
-            this._isPlural = true;
-            this._typeName = this.innerGeneric;
-            this._fullTypeName += "<" + this.innerGeneric + ">";
+        if (this.collectionTypes.find((d) => this.fullTypeName.endsWith(d))) {
+            this.isPlural = true;
+            this.typeName = this.innerGeneric;
+            this.fullTypeName += "<" + this.innerGeneric + ">";
             return;
         }
 
-        this._typeName = this._fullTypeName;
+        this.typeName = this.fullTypeName;
     }
 }

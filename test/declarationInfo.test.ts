@@ -4,7 +4,7 @@ import { expect } from "chai";
 
 function getTarget(input): DeclarationInfo {
     return new DeclarationInfo(input);
-};
+}
 
 suite("DeclarationInfo", () => {
     suite("extracted typeName", () => {
@@ -48,17 +48,17 @@ suite("DeclarationInfo", () => {
         test("should set isPlural property to true for array", () => {
             const input = data.WellKnownInterface + "[]";
             const target = getTarget(input);
-            expect(target.isPlural()).to.equal(true);
+            expect(target.getIsPlural()).to.equal(true);
             expect(target.getTypeName()).to.equal(data.WellKnownInterface);
         });
 
-        ["ICollection", "ObservableCollection", "DbSet", "List"].forEach(typeName => {
+        ["ICollection", "ObservableCollection", "DbSet", "List"].forEach((typeName) => {
             suite("for " + typeName, () => {
                 const input = "     " + typeName + "<" + data.WellKnownInterface + "> ";
 
                 test("should set isPlural property to true for " + typeName, () => {
                     const target = getTarget(input);
-                    expect(target.isPlural()).to.equal(true);
+                    expect(target.getIsPlural()).to.equal(true);
                 });
 
                 test("should return generic type parameter as a type name for " + typeName, () => {
@@ -71,7 +71,7 @@ suite("DeclarationInfo", () => {
 
     suite("extracted userInput", () => {
         [{ line: data.WellKnownTextLine, userInput: "_" },
-        { line: data.WellKnownTextLine, userInput: "my" }].forEach(td => {
+        { line: data.WellKnownTextLine, userInput: "my" }].forEach((td) => {
             test("should be " + td.userInput, () => {
                 const input = td.line + td.userInput;
                 const result = getTarget(input).getUserInput();
@@ -82,7 +82,7 @@ suite("DeclarationInfo", () => {
 
     suite("extracted isVariableDeclared", () => {
         [{ text: data.WellKnownTextLine + "someType", expected: false },
-        { text: data.WellKnownTextLine + "someType" + " ", expected: true }].forEach(td => {
+        { text: data.WellKnownTextLine + "someType" + " ", expected: true }].forEach((td) => {
             test("should be " + td.expected + " for " + "'" + td.text + "'", () => {
                 const result = getTarget(td.text).getIsVariableDeclared();
                 expect(result).to.equal(td.expected);
@@ -96,7 +96,7 @@ suite("DeclarationInfo", () => {
         { text: "     IList<IFooBoo> ", expected: true },
         { text: "     ISomeType<IList<IFooBoo>> ", expected: true },
         { text: "     private static ISomeType", expected: true },
-        { text: "     IList<IFooBoo", expected: false }].forEach(td => {
+        { text: "     IList<IFooBoo", expected: false }].forEach((td) => {
             test("should be " + td.expected + " for " + "'" + td.text + "'", () => {
                 const result = getTarget(td.text).getIsTypeDeclared();
                 expect(result).to.equal(td.expected);

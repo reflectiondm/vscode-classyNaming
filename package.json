@@ -1,5 +1,5 @@
 {
-    "name": "ClassyNaming",
+    "name": "classynaming",
     "version": "1.1.0",
     "author": {
         "name": "Andrei Zubov",
@@ -46,10 +46,11 @@
         "@types/node": "^6.0.40",
         "chai": "^3.5.0",
         "mocha": "^2.3.3",
+        "tslint": "^5.7.0",
         "typescript": "^2.0.3",
-        "vscode": "^1.0.0"
+        "vscode": "^1.1.5"
     },
     "dependencies": {
-        "pluralize": "^1.2.1"
+        "pluralize": "^7.0.0"
     }
 }

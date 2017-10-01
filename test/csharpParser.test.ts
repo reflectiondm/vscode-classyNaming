@@ -2,26 +2,26 @@ import { CsharpParser } from "../src/csharpParser";
 import data from "./commonTestData";
 import { expect } from "chai";
 
-suite("C# parser", function () {
+suite("C# parser", () => {
     const target = new CsharpParser();
     const wellKnownInterface = "ISomeInterface";
     const wellKnownTextLine = " public TestConstructor(ISomeInterface ";
 
-    suite("split type name", function () {
-        test("should break the interface in parts based on case, without I, lowercased", function () {
+    suite("split type name", () => {
+        test("should break the interface in parts based on case, without I, lowercased", () => {
             const result = target.splitTypeName(wellKnownInterface);
             expect(result).to.eql(["some", "interface"]);
         });
 
-        test("should break the className in parts based on case, lowercased", function () {
+        test("should break the className in parts based on case, lowercased", () => {
             const result = target.splitTypeName("TestCaseServiceProvider");
             expect(result).to.eql(["test", "case", "service", "provider"]);
         });
     });
 
-    suite("getParsingResult", function () {
-        suite("suggestions", function () {
-            const getSuggestions = function (input) {
+    suite("getParsingResult", () => {
+        suite("suggestions", () => {
+            const getSuggestions = (input) => {
                 return target.getParsingResult(input).suggestions;
             };
 
@@ -29,11 +29,11 @@ suite("C# parser", function () {
                 " public static TestConstructor(ISomeInterface ",
                 " public readonly TestConstructor(ISomeInterface "]
                 .forEach((line) => {
-                    test("should be able to provide suggested names", function () {
+                    test("should be able to provide suggested names", () => {
                         const result = getSuggestions(line);
                         expect(result).to.eql([
                             "interface",
-                            "someInterface"
+                            "someInterface",
                         ]);
                     });
                 });
@@ -44,41 +44,40 @@ suite("C# parser", function () {
             //     expect(result).to.eql([]);
             // });
 
-
             ["public", "private", "const", "static", "readonly", "protected", "abstract", "int", "class",
-                "string", "decimal", "var", "float", "bool", "boolean"].forEach(function (ignoreCase) {
-                    test("should ignore " + ignoreCase + " keyword", function () {
+                "string", "decimal", "var", "float", "bool", "boolean"].forEach((ignoreCase) => {
+                    test("should ignore " + ignoreCase + " keyword", () => {
                         const input = "   " + ignoreCase + " ";
                         const result = getSuggestions(input);
                         expect(result).to.eql([]);
                     });
                 });
 
-            test("should detect that the variable has already been provided", function () {
+            test("should detect that the variable has already been provided", () => {
                 const input = "  public ISomeType someType ";
                 const result = getSuggestions(input);
                 expect(result).to.eql([]);
             });
 
-            test("should provide suggestions with user input", function () {
+            test("should provide suggestions with user input", () => {
                 const input = "  public ISomeType my";
                 const result = getSuggestions(input);
                 expect(result).to.contain("mySomeType");
             });
 
-            test("should merge user input with name part if they are alike", function () {
+            test("should merge user input with name part if they are alike", () => {
                 const input = "  public ISomeComplexType som";
                 const result = getSuggestions(input);
                 expect(result).to.eql(["someType", "someComplexType"]);
             });
 
-            test("should not provide duplicate suggestions", function () {
+            test("should not provide duplicate suggestions", () => {
                 const input = "  public ISomeType some";
                 const result = getSuggestions(input);
                 expect(result).to.eql(["someType"]);
             });
 
-            test("should provide suggestions with lowercase character after  _ ", function () {
+            test("should provide suggestions with lowercase character after  _ ", () => {
                 const input = "  public ISomeType _";
                 const result = getSuggestions(input);
                 expect(result).to.contain("_someType");
@@ -86,8 +85,8 @@ suite("C# parser", function () {
             });
 
             ["ICollection", "ObservableCollection", "DbSet", "List", "IEnumerable", "IList", "LinkedList"]
-            .forEach(function (typeName) {
-                test("should pluralize suggested name for collections like " + typeName, function () {
+            .forEach((typeName) => {
+                test("should pluralize suggested name for collections like " + typeName, () => {
                     const input = "   public " + typeName + "<" + data.WellKnownInterface + "> ";
                     const result = getSuggestions(input);
                     expect(result).to.contain("someInterfaces");
@@ -103,8 +102,8 @@ suite("C# parser", function () {
 
             [["Box", "boxes"],
             ["Cross", "crosses"],
-            ["Index", "indices"]].forEach(function (param) {
-                test("should use correct plural form for " + param[0], function () {
+            ["Index", "indices"]].forEach((param) => {
+                test("should use correct plural form for " + param[0], () => {
                     const fullTypeName = "List<" + param[0] + ">";
                     const input = "   public " + fullTypeName + " ";
                     const result = target.getParsingResult(input);
@@ -116,7 +115,7 @@ suite("C# parser", function () {
             });
         });
 
-        test("should contain typeName", function () {
+        test("should contain typeName", () => {
             const input = data.WellKnownTextLine;
             const result = target.getParsingResult(input).typeName;
             expect(result).to.equal(data.WellKnownInterface);

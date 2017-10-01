@@ -10,13 +10,12 @@ export class CsharpParser {
         while (match) {
             if (match[1]) {
                 result.push([match[1].toUpperCase(), match[2]].join(""));
-            }
-            else {
+            } else {
                 result.push(match[0]);
             }
             match = re.exec(typeName);
         }
-        return result.map(m => m.toLowerCase());
+        return result.map((m) => m.toLowerCase());
     }
 
     public combineSuggestions(parts: string[]): string[] {
@@ -37,7 +36,7 @@ export class CsharpParser {
             return [];
         }
 
-        const typeName = declarationInfo.isPlural() ?
+        const typeName = declarationInfo.getIsPlural() ?
             pluralizer.plural(declarationInfo.getTypeName()) :
             declarationInfo.getTypeName();
 
@@ -45,10 +44,10 @@ export class CsharpParser {
         const suggestions = this.combineSuggestions(nameParts);
         const result = new Set();
         const userInput = declarationInfo.getUserInput();
-        const prefix = nameParts.find(part => part.includes(userInput)) || userInput;
+        const prefix = nameParts.find((part) => part.includes(userInput)) || userInput;
         if (userInput !== "") {
-            suggestions.map(s => s.includes(prefix, 0) ? s : this.combineWithUserInput(s, prefix))
-                .forEach(s => result.add(s));
+            suggestions.map((s) => s.includes(prefix, 0) ? s : this.combineWithUserInput(s, prefix))
+                .forEach((s) => result.add(s));
         } else {
             suggestions.forEach((s) => result.add(s));
         }
@@ -56,12 +55,12 @@ export class CsharpParser {
         return [...result];
     }
 
-    public getParsingResult(input: string): ParsingResult {
+    public getParsingResult(input: string): IParsingResult {
         const declarationInfo = new DeclarationInfo(input);
         const typeName = declarationInfo.getFullTypeName();
         const suggestions = this.getSuggestions(declarationInfo);
         const userInput = declarationInfo.getUserInput();
-        return new ParsingResult(suggestions, typeName, userInput);
+        return { suggestions, typeName, userInput };
     }
 
     private ToPascal(input: string): string {
@@ -79,13 +78,8 @@ export class CsharpParser {
     }
 }
 
-export class ParsingResult {
-    constructor(suggestions: string[], typeName: string, userInput: string) {
-        this.suggestions = suggestions;
-        this.typeName = typeName;
-        this.userInput = userInput;
-    }
-    public suggestions: string[];
-    public typeName: string;
-    public userInput: string;
+export interface IParsingResult {
+    suggestions: string[];
+    typeName: string;
+    userInput: string;
 }
