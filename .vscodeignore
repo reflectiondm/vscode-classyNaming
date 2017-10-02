@@ -8,6 +8,7 @@ src/**
 tsconfig.json
 
 assets/**
+.vscode-test/**
 node_modules/.bin/**
 **/*.ts
 typings.json
