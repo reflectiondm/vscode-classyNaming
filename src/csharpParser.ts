@@ -1,6 +1,6 @@
 import DeclarationInfo from "./declarationInfo";
 import { plural as pluralize } from "pluralize";
-import { stringBeginsWith, arrayIncludesAny, toCase, getCase } from './utils';
+import { stringBeginsWith, arrayContainsAny, toCase, getCase } from './utils';
 
 export class CsharpParser {
     public splitTypeName(typeName: string): string[] {
@@ -76,7 +76,7 @@ export class CsharpParser {
                 Suggestion = toCase("pascal", prefix + Suggestion);
             }
 
-            if (arrayIncludesAny(result, Suggestion, suggestion, _suggestion)) {
+            if (arrayContainsAny(result, Suggestion, suggestion, _suggestion)) {
                 break;
             }
 

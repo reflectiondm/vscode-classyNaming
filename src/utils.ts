@@ -10,10 +10,9 @@ function getCharacters(from: string, to: string): string[] {
 
 /** Determines if a string begins with a substring */
 function stringBeginsWith(str: string, substr: string, options = { caseSensitive: true }): boolean {
-    if (substr.length > str.length) {
+    if (substr.length > str.length || str.length === 0) {
         return false;
     }
-
     if (!substr || substr.length === 0) {
         return true;
     }
@@ -28,7 +27,14 @@ function stringBeginsWith(str: string, substr: string, options = { caseSensitive
 }
 
 /** Determines whether an array contains any of a list of values */
-function arrayIncludesAny<T>(array: T[], ...values: T[]): boolean {
+function arrayContainsAny<T>(array: T[], ...values: T[]): boolean {
+    if (!array || !array.length) {
+        return false;
+    }
+    if (!values || !values.length) {
+        return true;
+    }
+
     for (const val of values) {
         if (array.indexOf(val) > -1) {
             return true;
@@ -82,7 +88,7 @@ function concat(...args) {
 }
 
 export default {
-    arrayIncludesAny,
+    arrayContainsAny,
     getCase,
     concat,
     getCharacters,
@@ -91,7 +97,7 @@ export default {
 };
 
 export {
-    arrayIncludesAny,
+    arrayContainsAny,
     getCase,
     concat,
     getCharacters,
