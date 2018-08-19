@@ -68,7 +68,11 @@ function toCase(toType: 'pascal' | 'camel' | '_camel', str: string): string {
     return str;
 }
 
-function getCase(str: string): 'pascal' | 'camel' | '_camel' {
+function getCase(str: string): 'pascal' | 'camel' | '_camel' | null {
+    if (!str) {
+        return null;
+    }
+
     const firstChar = str[0];
     const uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
