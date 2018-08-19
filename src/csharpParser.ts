@@ -50,7 +50,7 @@ export class CsharpParser {
         const nameParts = this.splitTypeName(typeName);
         const result = new Set();
         const userInput = declarationInfo.getUserInput();
-        const suggestions = this.combineSuggestions(nameParts, { includePascal: isPrivate, includeUnderscore: !isPrivate && !userInput });
+        const suggestions = this.combineSuggestions(nameParts, { includePascal: !isPrivate, includeUnderscore: isPrivate && !userInput });
         const prefix = nameParts.find((part) => part.includes(userInput)) || userInput;
         if (userInput !== "") {
             suggestions.map((s) => s.includes(prefix, 0) ? s : this.combineWithUserInput(s, prefix))
