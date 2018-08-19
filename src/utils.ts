@@ -38,6 +38,43 @@ function arrayIncludesAny<T>(array: T[], ...values: T[]): boolean {
     return false;
 }
 
+function toCase(toType: 'pascal' | 'camel' | '_camel', str: string): string {
+    if (str === "_" && toType === "_camel") {
+        return "_";
+    } else if (str === "_" && toType !== "_camel") {
+        return "";
+    }
+
+    if (str[0] === "_") {
+        str = str.substr(1);
+    }
+
+    if (toType === "camel") {
+        str = str[0].toLowerCase() + str.substr(1);
+    }
+    if (toType === "_camel") {
+        str = "_" + str[0].toLowerCase() + str.substr(1);
+    }
+    if (toType === "pascal") {
+        str = str[0].toUpperCase() + str.substr(1);
+    }
+
+    return str;
+}
+
+function getCase(str: string): 'pascal' | 'camel' | '_camel' {
+    const firstChar = str[0];
+    const uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    if (firstChar === "_") {
+        return "_camel";
+    } else if (uppercaseAlphabet.includes(firstChar)) {
+        return "pascal";
+    } else {
+        return "camel";
+    }
+}
+
 function concat(...args) {
     return args.reduce((concatenated: [any], current: [any]) => {
         return concatenated.concat(current);
@@ -45,10 +82,19 @@ function concat(...args) {
 }
 
 export default {
+    arrayIncludesAny,
+    getCase,
+    concat,
     getCharacters,
     stringBeginsWith,
-    arrayIncludesAny,
-    concat,
+    toCase,
 };
 
-export { getCharacters, stringBeginsWith, arrayIncludesAny, concat };
+export {
+    arrayIncludesAny,
+    getCase,
+    concat,
+    getCharacters,
+    stringBeginsWith,
+    toCase,
+};
