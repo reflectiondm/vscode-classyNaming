@@ -18,15 +18,21 @@ export class CsharpParser {
         return result.map((m) => m.toLowerCase());
     }
 
-    public combineSuggestions(parts: string[]): string[] {
+    public combineSuggestions(parts: string[], config: { includePascal?: boolean, includeUnderscore?: boolean }): string[] {
         const result = [];
         for (let i = parts.length - 1; i >= 0; i--) {
             let suggestion = "";
             for (let j = i; j < parts.length; j++) {
                 suggestion += this.ToPascal(parts[j]);
             }
-            suggestion = this.ToCamel(suggestion);
-            result.push(suggestion);
+
+            if (config.includePascal) {
+                result.push(suggestion);
+            }
+            if (config.includeUnderscore) {
+                result.push("_" + this.ToCamel(suggestion));
+            }
+            result.push(this.ToCamel(suggestion));
         }
         return result;
     }
@@ -36,14 +42,15 @@ export class CsharpParser {
             return [];
         }
 
+        const isPrivate = declarationInfo.getIsPrivate();
         const typeName = declarationInfo.getIsPlural() ?
             pluralizer.plural(declarationInfo.getTypeName()) :
             declarationInfo.getTypeName();
 
         const nameParts = this.splitTypeName(typeName);
-        const suggestions = this.combineSuggestions(nameParts);
         const result = new Set();
         const userInput = declarationInfo.getUserInput();
+        const suggestions = this.combineSuggestions(nameParts, { includePascal: isPrivate, includeUnderscore: !isPrivate && !!userInput });
         const prefix = nameParts.find((part) => part.includes(userInput)) || userInput;
         if (userInput !== "") {
             suggestions.map((s) => s.includes(prefix, 0) ? s : this.combineWithUserInput(s, prefix))
