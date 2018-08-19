@@ -40,11 +40,11 @@ suite("utils", () => {
 
     suite("stringBeginsWith", () => {
         test("returns false for str = ''", () => {
-            expect(sut.stringBeginsWith('', 'abc')).to.eql(false);
+            expect(sut.stringBeginsWith("", "abc")).to.eql(false);
         });
 
         test("returns true for empty substr = ''", () => {
-            expect(sut.stringBeginsWith('abc', '')).to.eql(true);
+            expect(sut.stringBeginsWith("abc", "")).to.eql(true);
         });
 
         test("returns true when str begins with substr", () => {
@@ -75,6 +75,52 @@ suite("utils", () => {
 
         test("returns true when array contains a value", () => {
             expect(sut.arrayContainsAny([1, 2, 3], 4, 5, 6)).to.eql(false);
+        });
+    });
+
+    suite("getCase and toCase", () => {
+        test("getCase for pascal", () => {
+            expect(sut.getCase("PascalText")).to.eql("pascal");
+        });
+
+        test("getCase for camel", () => {
+            expect(sut.getCase("camelText")).to.eql("camel");
+        });
+
+        test("getCase for _camel", () => {
+            expect(sut.getCase("_underscoreText")).to.eql("_camel");
+        });
+
+        test("getCase for '_'", () => {
+            expect(sut.getCase("_")).to.eql("_camel");
+        });
+
+        test("getCase for ''", () => {
+            expect(sut.getCase("")).to.eql(null);
+        });
+
+        test("toCase for ''", () => {
+            expect(sut.toCase("pascal", "")).to.eql("");
+        });
+
+        test("toCase _camel for '_'", () => {
+            expect(sut.toCase("_camel", "_")).to.eql("_");
+        });
+
+        test("toCase Pascal for '_'", () => {
+            expect(sut.toCase("pascal", "_")).to.eql("");
+        });
+
+        test("toCase _camel", () => {
+            expect(sut.toCase("_camel", "MyClass")).to.eql("_myClass");
+        });
+
+        test("toCase camel", () => {
+            expect(sut.toCase("camel", "_iValuePrivacy")).to.eql("iValuePrivacy");
+        });
+
+        test("toCase Pascal", () => {
+            expect(sut.toCase("pascal", "aWildCamel")).to.eql("AWildCamel");
         });
     });
 });
