@@ -55,4 +55,26 @@ suite("utils", () => {
             expect(sut.stringBeginsWith("abcABC i am testing", "abcd")).to.eql(false);
         });
     });
+
+    suite("arrayContainsAny", () => {
+        test("returns false for array = []", () => {
+            expect(sut.arrayContainsAny([], 2)).to.eql(false);
+        });
+
+        test("returns true for values = []", () => {
+            expect(sut.arrayContainsAny([1, 2, 3], ...[])).to.eql(true);
+        });
+
+        test("returns true for values = undefined", () => {
+            expect(sut.arrayContainsAny([1, 2, 3])).to.eql(true);
+        });
+
+        test("returns true when array contains a value", () => {
+            expect(sut.arrayContainsAny([1, 2, 3], 2, 3)).to.eql(true);
+        });
+
+        test("returns true when array contains a value", () => {
+            expect(sut.arrayContainsAny([1, 2, 3], 4, 5, 6)).to.eql(false);
+        });
+    });
 });
