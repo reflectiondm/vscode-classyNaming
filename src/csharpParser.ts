@@ -1,6 +1,6 @@
 import DeclarationInfo from "./declarationInfo";
 import { plural as pluralize } from "pluralize";
-import { stringBeginsWith, arrayIncludesAny } from './utils';
+import { stringBeginsWith, arrayIncludesAny, toCase, getCase } from './utils';
 
 export class CsharpParser {
     public splitTypeName(typeName: string): string[] {
@@ -24,7 +24,7 @@ export class CsharpParser {
         for (let i = parts.length - 1; i >= 0; i--) {
             let suggestion = "";
             for (let j = i; j < parts.length; j++) {
-                suggestion += this.toCase("pascal", parts[j]);
+                suggestion += toCase("pascal", parts[j]);
             }
 
             result.push(suggestion);
@@ -67,23 +67,23 @@ export class CsharpParser {
         const suggestions = this.getPascalSuggestions(splitTypeName);
         for (let Suggestion of suggestions) {
             // tslint:disable-next-line:variable-name
-            let _suggestion = this.toCase("_camel", Suggestion);
-            let suggestion = this.toCase("camel", Suggestion);
+            let _suggestion = toCase("_camel", Suggestion);
+            let suggestion = toCase("camel", Suggestion);
 
             if (!stringBeginsWith(Suggestion, prefix, { caseSensitive: false })) {
-                _suggestion = this.toCase("_camel", prefix + Suggestion);
-                suggestion = this.toCase("camel", prefix + Suggestion);
-                Suggestion = this.toCase("pascal", prefix + Suggestion);
+                _suggestion = toCase("_camel", prefix + Suggestion);
+                suggestion = toCase("camel", prefix + Suggestion);
+                Suggestion = toCase("pascal", prefix + Suggestion);
             }
 
             if (arrayIncludesAny(result, Suggestion, suggestion, _suggestion)) {
                 break;
             }
 
-            if (this.caseOf(userInput) === "_camel") {
+            if (getCase(userInput) === "_camel") {
                 allowedCases.pascal = false;
                 allowedCases._camel = true;
-            } else if (this.caseOf(userInput) === "pascal") {
+            } else if (getCase(userInput) === "pascal") {
                 allowedCases.pascal = true;
                 allowedCases._camel = false;
             }
@@ -100,43 +100,6 @@ export class CsharpParser {
         }
 
         return result;
-    }
-
-    private toCase(toType: 'pascal' | 'camel' | '_camel', str: string): string {
-        if (str === "_" && toType === "_camel") {
-            return "_";
-        } else if (str === "_" && toType !== "_camel") {
-            return "";
-        }
-
-        if (str[0] === "_") {
-            str = str.substr(1);
-        }
-
-        if (toType === "camel") {
-            str = str[0].toLowerCase() + str.substr(1);
-        }
-        if (toType === "_camel") {
-            str = "_" + str[0].toLowerCase() + str.substr(1);
-        }
-        if (toType === "pascal") {
-            str = str[0].toUpperCase() + str.substr(1);
-        }
-
-        return str;
-    }
-
-    private caseOf(str: string): 'pascal' | 'camel' | '_camel' {
-        const firstChar = str[0];
-        const uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        if (firstChar === "_") {
-            return "_camel";
-        } else if (uppercaseAlphabet.includes(firstChar)) {
-            return "pascal";
-        } else {
-            return "camel";
-        }
     }
 }
 
