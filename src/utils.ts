@@ -45,6 +45,10 @@ function arrayContainsAny<T>(array: T[], ...values: T[]): boolean {
 }
 
 function toCase(toType: 'pascal' | 'camel' | '_camel', str: string): string {
+    if (!str) {
+        return "";
+    }
+
     if (str === "_" && toType === "_camel") {
         return "_";
     } else if (str === "_" && toType !== "_camel") {
