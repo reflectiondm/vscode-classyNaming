@@ -32,7 +32,9 @@ suite("C# parser", () => {
                     test("should be able to provide suggested names", () => {
                         const result = getSuggestions(line);
                         expect(result).to.eql([
+                            "_interface",
                             "interface",
+                            "_someInterface",
                             "someInterface",
                         ]);
                     });
@@ -85,14 +87,14 @@ suite("C# parser", () => {
             });
 
             ["ICollection", "ObservableCollection", "DbSet", "List", "IEnumerable", "IList", "LinkedList"]
-            .forEach((typeName) => {
-                test("should pluralize suggested name for collections like " + typeName, () => {
-                    const input = "   public " + typeName + "<" + data.WellKnownInterface + "> ";
-                    const result = getSuggestions(input);
-                    expect(result).to.contain("someInterfaces");
-                    expect(result).to.contain("interfaces");
+                .forEach((typeName) => {
+                    test("should pluralize suggested name for collections like " + typeName, () => {
+                        const input = "   public " + typeName + "<" + data.WellKnownInterface + "> ";
+                        const result = getSuggestions(input);
+                        expect(result).to.contain("someInterfaces");
+                        expect(result).to.contain("interfaces");
+                    });
                 });
-            });
 
             test("should not complete unfinished generic definitions", () => {
                 const input = "		IList<FooBo";
