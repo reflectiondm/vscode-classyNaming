@@ -14,9 +14,11 @@ export default class DeclarationInfo {
     private parameterDefinition: string;
     private userInput: string;
     private isPlural: boolean;
+    private isPrivate: boolean;
 
     constructor(input: string) {
         this.isPlural = false;
+        this.isPrivate = input.includes("private ");
         const conditionedInput = this.excludeGenerics(input);
         this.userInput = this.extractUserInput(conditionedInput);
         this.parameterDefinition = conditionedInput.substring(0, conditionedInput.length - this.userInput.length);
@@ -51,6 +53,10 @@ export default class DeclarationInfo {
 
     public getIsPlural(): boolean {
         return this.isPlural;
+    }
+
+    public getIsPrivate(): boolean {
+        return this.isPrivate;
     }
 
     private excludeGenerics(input: string): string {
